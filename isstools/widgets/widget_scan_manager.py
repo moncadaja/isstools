@@ -5,10 +5,10 @@ from isstools.widgets import widget_energy_selector
 
 
 import numpy as np
-import pkg_resources
-from PyQt5 import uic, QtWidgets, QtCore, QtGui
-from PyQt5.Qt import Qt
-from PyQt5.QtWidgets import QMenu
+import importlib.resources
+from qtpy import uic, QtWidgets, QtCore, QtGui
+from qtpy.QtCore import Qt
+from qtpy.QtWidgets import QMenu
 
 from isstools.conversions import xray
 from isstools.dialogs import UpdateAngleOffset
@@ -22,10 +22,10 @@ from isstools.dialogs.BasicDialogs import question_message_box, message_box
 from ..elements.elements import remove_special_characters
 from isstools.widgets import widget_emission_energy_selector
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_scan_manager.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_scan_manager.ui')
 
 class UIScanManager(*uic.loadUiType(ui_path)):
-    scansChanged = QtCore.pyqtSignal()
+    scansChanged = QtCore.Signal()
 
     def __init__(self,
                  hhm= None,
@@ -198,7 +198,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
         detector_names = ['Pilatus 100k New', 'Pilatus 100k', 'Xspress3', 'Ge detector']
         for detector in detector_names:
             qitem = QtWidgets.QCheckBox(detector)
-            qitem.setCheckState(False)
+            qitem.setChecked(False)
             qitem.setTristate(False)
             self.verticalLayout_detectors.addWidget(qitem)
 
@@ -593,18 +593,18 @@ class UIScanManager(*uic.loadUiType(ui_path)):
                 self.tabWidget_mono_scan_type.tabBarClicked.emit(0)
 
                 if global_scan['scan_parameters']['type'] == 'standard':
-                    self.radioButton_flypath_standard.setChecked(1)
+                    self.radioButton_flypath_standard.setChecked(True)
                     self.edit_ds2_pree_duration.setText(str(scan_parameters['preedge_duration']))
                     self.edit_ds2_edge_duration.setText(str(scan_parameters['edge_duration']))
                     self.edit_ds2_poste_duration.setText(str(scan_parameters['postedge_duration']))
                     self.edit_preedge_flex_frac.setText(str(scan_parameters['preedge_flex']))
                     self.edit_postedge_flex_frac.setText(str(scan_parameters['postedge_flex']))
                 elif global_scan['scan_parameters']['type'] == 'double_sine':
-                    self.radioButton_flypath_doublesine.setChecked(1)
+                    self.radioButton_flypath_doublesine.setChecked(True)
                     self.edit_ds_pree_duration.setText(str(scan_parameters['preedge_duration']))
                     self.edit_ds_poste_duration.setText(str(scan_parameters['postedge_duration']))
                 elif global_scan['scan_parameters']['type'] == 'sine':
-                    self.radioButton_flypath_sine.setChecked(1)
+                    self.radioButton_flypath_sine.setChecked(True)
                     self.edit_sine_total_duration.setText(str(scan_parameters['duration']))
                 self.edit_pad_time.setText(str(scan_parameters['pad']))
                 self.spinBox_tiling_repetitions.setValue(scan_parameters['repeat'])
@@ -695,7 +695,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
         offset = float(self.label_angle_offset.text())
         energy = float(self.widget_energy_selector.edit_E0.text())
         dlg = UpdateAngleOffset.UpdateAngleOffset(offset, energy, parent=self)
-        if dlg.exec_():
+        if dlg.exec():
             try:
                 values = dlg.getValues()
                 if len(values) == 1:
@@ -729,7 +729,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
         populate_fields = menu.addAction("&Populate fields with scan parameters")
         parentPosition = self.listWidget_local_manager.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition + QPos)
-        action = menu.exec_()
+        action = menu.exec()
         if action == change_offset:
             self.change_offset_for_local_scan()
         elif action == populate_fields:

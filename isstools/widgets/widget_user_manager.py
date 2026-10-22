@@ -1,25 +1,25 @@
 import re
 import sys
 import numpy as np
-import pkg_resources
+import importlib.resources
 import math
 import requests
 import time as ttime
 import uuid
 
 
-from PyQt5 import uic, QtGui, QtCore, QtWidgets
-from PyQt5.QtGui import QPixmap, QCursor, QStandardItem
-from PyQt5.Qt import QObject, Qt
-from PyQt5.QtCore import QThread, QSettings
-from PyQt5.QtWidgets import QMenu, QToolTip, QHBoxLayout, QWidget, QListWidgetItem
+from qtpy import uic, QtGui, QtCore, QtWidgets
+from qtpy.QtGui import QPixmap, QCursor, QStandardItem
+from qtpy.QtCore import QObject, Qt
+from qtpy.QtCore import QThread, QSettings
+from qtpy.QtWidgets import QMenu, QToolTip, QHBoxLayout, QWidget, QListWidgetItem
 from isstools.elements.widget_motors import UIWidgetMotors, UIWidgetMotorsWithSlider
 from ..elements.elements import remove_special_characters
 
 
 
 from isstools.dialogs import UpdateUserDialog, SetEnergy, GetEmailAddress
-from PyQt5 import uic, QtWidgets
+from qtpy import uic, QtWidgets
 
 from xas.file_io import make_user_dir
 from isscloudtools.slack import *
@@ -27,14 +27,14 @@ from isscloudtools.gmail import *
 from isscloudtools.dropbox import *
 
 
-from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem
+from qtpy.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem
 from isstools.dialogs.BasicDialogs import question_message_box, error_message_box, message_box
 
 from isstools.dialogs.BasicDialogs import message_box, question_message_box
 
 import matplotlib.path as mpltPath
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_user_manager.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_user_manager.ui')
 
 
 ROOT_PATH = '/nsls2/data/iss/legacy'
@@ -42,7 +42,7 @@ USER_PATH = 'processed'
 
 class UIUserManager(*uic.loadUiType(ui_path)):
 
-    sample_list_changed_signal = QtCore.pyqtSignal()
+    sample_list_changed_signal = QtCore.Signal()
 
     def __init__(self,
                  RE=None,
@@ -352,7 +352,7 @@ class UIUserManager(*uic.loadUiType(ui_path)):
 
         if email_address ==None:
             dlg = GetEmailAddress.GetEmailAddress('', parent=self)
-            if dlg.exec_():
+            if dlg.exec():
                 email_address = dlg.getValue()
 
         regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'

@@ -1,11 +1,11 @@
 import json
-import pkg_resources
-from PyQt5 import uic, QtWidgets, QtCore
+import importlib.resources
+from qtpy import uic, QtWidgets, QtCore
 from isstools.widgets import widget_emission_energy_selector
 import bluesky.plan_stubs as bps
 from xas.spectrometer import Crystal
 import pandas as pd
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_johann_spectrometer.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_johann_spectrometer.ui')
 from isstools.elements.figure_update import update_figure_with_colorbar, update_figure, setup_figure
 # from isstools.dialogs import (MoveMotorDialog)
 from xas.spectrometer import analyze_elastic_scan
@@ -305,7 +305,7 @@ class UIJohannTools(*uic.loadUiType(ui_path)):
         data_dict['ecen'] = Ecen
         data_dict['uid'] = uid
 
-        self._alignment_data = self._alignment_data.append(data_dict, ignore_index=True)
+        self._alignment_data = pd.concat([self._alignment_data, pd.DataFrame([data_dict])], ignore_index=True)
 
         self.parent.update_scan_figure_for_energy_scan(E, I_fit_raw)
         key = self.comboBox_johann_tweak_motor.currentText()
@@ -466,7 +466,7 @@ class UIJohannTools(*uic.loadUiType(ui_path)):
                          'energy_act' : each_energy_act,
                          'resolution' : each_resolution,
                          'uid' : each_uid}
-            self._calibration_data = self._calibration_data.append(data_dict, ignore_index=True)
+            self._calibration_data = pd.concat([self._calibration_data, pd.DataFrame([data_dict])], ignore_index=True)
         self.parent.update_proc_figure('calibration')
 
 

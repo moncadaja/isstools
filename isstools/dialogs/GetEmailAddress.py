@@ -1,7 +1,7 @@
-from PyQt5 import uic, QtGui, QtCore
-import pkg_resources
+from qtpy import uic, QtGui, QtCore
+import importlib.resources
 
-ui_path = pkg_resources.resource_filename('isstools', 'dialogs/GetEmailAddress.ui')
+ui_path = str(importlib.resources.files('isstools') / 'dialogs/GetEmailAddress.ui')
 
 class GetEmailAddress(*uic.loadUiType(ui_path)):
 

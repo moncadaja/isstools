@@ -1,6 +1,6 @@
 
-from PyQt5 import uic, QtGui, QtCore
-import pkg_resources
+from qtpy import uic, QtGui, QtCore
+import importlib.resources
 import requests
 import urllib.request
 import numpy as np
@@ -17,7 +17,7 @@ import bluesky.plan_stubs as bps
 
 import uuid
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_info_beamline.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_info_beamline.ui')
 
 ROOT_PATH_SHARED = '/nsls2/data/iss/legacy/xf08id'
 
@@ -272,7 +272,7 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
     def set_energy(self):
         energy = self.hhm.energy.read()['hhm_energy']['value']
         dlg = SetEnergy.SetEnergy(round(energy), parent=self)
-        if dlg.exec_():
+        if dlg.exec():
             try:
                 new_energy = float(dlg.getValues())
                 print(new_energy)
@@ -290,7 +290,7 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
         energy = np.round(self.motor_emission.energy.position, 2)
         limits = self.motor_emission.energy.limits
         dlg = SetEnergy.SetEnergy(energy, parent=self)
-        if dlg.exec_():
+        if dlg.exec():
             try:
                 new_energy = float(dlg.getValues())
                 print(new_energy)

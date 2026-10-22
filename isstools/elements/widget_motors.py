@@ -1,15 +1,15 @@
-import pkg_resources
-from PyQt5 import uic, QtWidgets
-from PyQt5.QtCore import QThread, QSettings, Qt
-from PyQt5.QtGui import QPixmap, QCursor
-from PyQt5.Qt import  QObject
+import importlib.resources
+from qtpy import uic, QtWidgets
+from qtpy.QtCore import QThread, QSettings, Qt
+from qtpy.QtGui import QPixmap, QCursor
+from qtpy.QtCore import QObject
 from bluesky.callbacks import LivePlot
 from bluesky.callbacks.mpl_plotting import LiveScatter
 import bluesky.plan_stubs as bps
 import bluesky.plans as bp
 import numpy as np
 from functools import partial
-from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem, QSlider, QToolTip
+from qtpy.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem, QSlider, QToolTip
 
 # from isstools.dialogs import MoveMotorDialog
 # from isstools.dialogs.BasicDialogs import question_message_box
@@ -24,7 +24,7 @@ from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacer
 from isstools.dialogs.UpdateMotorLimit import UIUpdateMotorLimit
 #
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_motor_widget.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_motor_widget.ui')
 
 def try_to_update_gui_decorator(method):
     def wrapper(obj, *args, **kwargs):
@@ -192,7 +192,7 @@ class UIWidgetMotors(*uic.loadUiType(ui_path)):
     def update_lo_hi_limit(self):
         dlg = UIUpdateMotorLimit("", self._motor_object, parent=self)
 
-        if dlg.exec_():
+        if dlg.exec():
             pass
 
 
@@ -206,12 +206,12 @@ class UIWidgetMotorsWithSlider(UIWidgetMotors):
         self.ticks = np.array([i for i in ticks])
         self.compute_slider_grid()
 
-        self.slider = QSlider(1) # horizontal
+        self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(0)
         self.slider.setMaximum(99)
         self.slider.setSingleStep(1)
         self.slider.setTickInterval(33)
-        self.slider.setTickPosition(3)
+        self.slider.setTickPosition(QSlider.TicksBothSides)
 
         self._update_slider(self._motor_object.twv.get())
         self._motor_object.twv.subscribe(self.update_slider)

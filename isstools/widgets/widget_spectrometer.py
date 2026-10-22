@@ -1,17 +1,17 @@
-import pkg_resources
-from PyQt5 import uic, QtWidgets
-from PyQt5.QtCore import QThread, QSettings
-from PyQt5.Qt import QObject
+import importlib.resources
+from qtpy import uic, QtWidgets
+from qtpy.QtCore import QThread, QSettings
+from qtpy.QtCore import QObject
 from bluesky.callbacks import LivePlot
 from bluesky.callbacks.mpl_plotting import LiveScatter
 import bluesky.plan_stubs as bps
 import bluesky.plans as bp
 import numpy as np
 import pandas as pd
-from PyQt5 import uic, QtGui, QtCore, QtWidgets
+from qtpy import uic, QtGui, QtCore, QtWidgets
 from datetime import datetime
 import time as ttime
-from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem, QSlider, QToolTip, QCheckBox
+from qtpy.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem, QSlider, QToolTip, QCheckBox
 import xraydb
 import copy
 from isstools.dialogs import MoveMotorDialog
@@ -29,12 +29,12 @@ from ..elements.elements import get_spectrometer_line_dict
 # from isstools.elements.liveplots import NormPlot
 from isstools.widgets import widget_emission_energy_selector
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_spectrometer.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_spectrometer.ui')
 
 
 class UISpectrometer(*uic.loadUiType(ui_path)):
-    spectrometer_config_list_changed_signal = QtCore.pyqtSignal()
-    spectrometer_config_changed_signal = QtCore.pyqtSignal()
+    spectrometer_config_list_changed_signal = QtCore.Signal()
+    spectrometer_config_changed_signal = QtCore.Signal()
 
     def __init__(self,
                  RE,
@@ -284,7 +284,7 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
             if self.canvas_proc.motor != '':
                 dlg = MoveMotorDialog.MoveMotorDialog(new_position=event.xdata, motor=self.canvas_proc.motor,
                                                       parent=self.canvas_proc)
-                if dlg.exec_():
+                if dlg.exec():
                     pass
 
     def getX_scan(self, event):
@@ -293,7 +293,7 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
             if self.canvas_scan.motor != '':
                 dlg = MoveMotorDialog.MoveMotorDialog(new_position=event.xdata, motor=self.canvas_scan.motor,
                                                       parent=self.canvas_scan)
-                if dlg.exec_():
+                if dlg.exec():
                     pass
 
     def _detector_selected(self, cb_det, cb_chan):

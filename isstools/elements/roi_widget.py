@@ -1,16 +1,16 @@
-from PyQt5.QtWidgets import (
+from qtpy.QtWidgets import (
     QApplication, QWidget, QHBoxLayout,
     QSpinBox, QLabel
 )
 
-from PyQt5.QtWidgets import QWidget, QLabel, QSpinBox, QHBoxLayout
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer
+from qtpy.QtWidgets import QWidget, QLabel, QSpinBox, QHBoxLayout
+from qtpy import QtWidgets
+from qtpy.QtCore import QTimer
 
-from PyQt5 import uic, QtGui, QtCore
-import pkg_resources
+from qtpy import uic, QtGui, QtCore
+import importlib.resources
 
-ui_path = pkg_resources.resource_filename('isstools', 'elements/roi_widget.ui')
+ui_path = str(importlib.resources.files('isstools') / 'elements/roi_widget.ui')
 
 class ROIWidget(*uic.loadUiType(ui_path)):
     def __init__(self, ge_detector, roi = 1, channel=1):

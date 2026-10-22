@@ -1,8 +1,8 @@
-import pkg_resources
-from PyQt5 import uic, QtGui, QtCore, QtWidgets
-from PyQt5.Qt import Qt
+import importlib.resources
+from qtpy import uic, QtGui, QtCore, QtWidgets
+from qtpy.QtCore import Qt
 
-from PyQt5.QtWidgets import QMenu
+from qtpy.QtWidgets import QMenu
 from isstools.elements import elements
 from isstools.elements.parameter_handler import parse_plan_parameters
 # from xas.trajectory import trajectory_manager
@@ -14,13 +14,13 @@ from isstools.dialogs import UpdateSampleInfo, UpdateScanInfo
 from isstools.dialogs.BasicDialogs import question_message_box
 import bluesky.plan_stubs as bps
 from ..elements.elements import remove_special_characters
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_batch_manual.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_batch_manual.ui')
 
 
 class UIBatchManual(*uic.loadUiType(ui_path)):
-    sample_list_changed_signal = QtCore.pyqtSignal()
-    scan_list_changed_signal = QtCore.pyqtSignal()
-    batch_list_changed_signal = QtCore.pyqtSignal()
+    sample_list_changed_signal = QtCore.Signal()
+    scan_list_changed_signal = QtCore.Signal()
+    batch_list_changed_signal = QtCore.Signal()
     def __init__(self,
                  service_plan_funcs,
                  hhm,
@@ -188,7 +188,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
                 sample_index = item.index
                 sample = self.sample_manager.sample_at_index(sample_index)
                 dlg = UpdateSampleInfo.UpdateSampleInfo(sample.name, sample.comment)
-                if dlg.exec_():
+                if dlg.exec():
                     new_name, new_comment = dlg.getValues()
                     self.sample_manager.update_sample_at_index(sample_index, new_name, new_comment)
                     # item.setText(f'{item.name} at X {item.x :0.2f} Y {item.y :0.2f} Z {item.z :0.2f} Th {item.th :0.2f}')
@@ -198,7 +198,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
                 sample_point_index = item.index
                 coordinate_dict = self.sample_manager.sample_coordinate_dict_at_index(sample_index, sample_point_index)
                 dlg = UpdateSampleInfo.UpdateSamplePointInfo(sample_name, **coordinate_dict)
-                if dlg.exec_():
+                if dlg.exec():
                     new_coordinate_dict = dlg.getValues()
                     self.sample_manager.update_sample_coordinates_at_index(sample_index, sample_point_index,
                                                                            new_coordinate_dict)
@@ -212,7 +212,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
         #                                         scan_types, trajectories,
         #                                         parent=self)
         #
-        #         if dlg.exec_():
+        #         if dlg.exec():
         #             item.name, item.scan_type, item.trajectory, item.repeat, item.delay = dlg.getValues()
         #             item.setText(f'{item.scan_type} with {item.name} {item.repeat} times with {item.delay} s delay')
         # elif len(selection) > 1:
@@ -374,7 +374,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
         item.setText(0, item_str)
         item.setExpanded(True)
         if checkable:
-            item.setFlags(item.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+            item.setFlags(item.flags() | Qt.ItemIsAutoTristate | Qt.ItemIsUserCheckable)
         if force_unchecked:
             item.setCheckState(0, Qt.Unchecked)
         item.kind = kind
@@ -511,11 +511,11 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
 
     def check_all_samples(self):
         for item in self._sample_item_iterator():
-            item.setCheckState(0, 2)
+            item.setCheckState(0, Qt.Checked)
 
     def uncheck_all_samples(self):
         for item in self._sample_item_iterator():
-            item.setCheckState(0, 0)
+            item.setCheckState(0, Qt.Unchecked)
 
     def get_sample_info_from_autopilot(self):
         try:
@@ -540,7 +540,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
             message_box('Error', 'Autopilot table is not defined')
 
 
-    def check_selected_samples(self, checkstate=2):
+    def check_selected_samples(self, checkstate=Qt.Checked):
         index_list = self.treeWidget_samples.selectedIndexes()
         for index in index_list:
             item = self.treeWidget_samples.itemFromIndex(index)
@@ -557,7 +557,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
         for i in range(item.childCount()):
             point = item.child(i)
             if not point.is_exposed:
-                point.setCheckState(0, 2)
+                point.setCheckState(0, Qt.Checked)
                 n_checked += 1
             if n_checked == n_to_check:
                 break
@@ -569,7 +569,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
             sample_key = sample_item.index
             for sample_point_item in self._sample_point_item_iterator(i):
                 sample_point_index = sample_point_item.index
-                point_is_checked = sample_point_item.checkState(0)
+                point_is_checked = sample_point_item.checkState(0) == Qt.Checked
                 if point_is_checked:
                     if sample_key not in index_dict.keys():
                         index_dict[sample_key] = []
@@ -635,7 +635,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
     def get_checked_scan_index_list(self):
         index_list = []
         for scan_item in self._scan_item_iterator():
-            if scan_item.checkState(0):
+            if scan_item.checkState(0) == Qt.Checked:
                 index_list.append(scan_item.index)
         return index_list
 
@@ -822,15 +822,15 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
         check_n_unexposed_samples = menu.addAction("&Check N unexposed samples")
         parentPosition = self.treeWidget_samples.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition+QPos)
-        action = menu.exec_()
+        action = menu.exec()
         if action == modify:
             self.modify_item()
         elif action == move_to_sample:
             self.move_to_sample()
         elif action == check_selected_samples:
-            self.check_selected_samples(checkstate=2)
+            self.check_selected_samples(checkstate=Qt.Checked)
         elif action == uncheck_selected_samples:
-            self.check_selected_samples(checkstate=0)
+            self.check_selected_samples(checkstate=Qt.Unchecked)
         elif action == set_as_exposed:
             self.set_as_exposed_selected_samples()
         elif action == set_as_unexposed:
@@ -843,7 +843,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
         modify = menu.addAction("&Modify")
         parentPosition = self.listView_scans.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition+QPos)
-        action = menu.exec_()
+        action = menu.exec()
         if action == modify:
             self.modify_item()
 
@@ -855,7 +855,7 @@ class UIBatchManual(*uic.loadUiType(ui_path)):
 
         parentPosition = self.treeView_batch.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition+QPos)
-        action = menu.exec_()
+        action = menu.exec()
         if action == modify:
             self.modify_item()
         elif action == copy:

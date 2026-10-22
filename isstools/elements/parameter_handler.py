@@ -1,6 +1,6 @@
 import inspect
 import re
-from PyQt5 import QtWidgets
+from qtpy import QtWidgets
 
 
 def create_parameter(description, annotation, units=None):
@@ -30,7 +30,7 @@ def create_parameter(description, annotation, units=None):
             def_val = True
         else:
             def_val = False
-        qitem.setCheckState(def_val)
+        qitem.setChecked(def_val)
         qitem.setTristate(False)
     elif annotation == str:
         qitem = QtWidgets.QLineEdit()

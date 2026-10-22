@@ -1,13 +1,13 @@
-import pkg_resources
-from PyQt5 import uic, QtCore
-from PyQt5.QtGui import QPixmap
+import importlib.resources
+from qtpy import uic, QtCore
+from qtpy.QtGui import QPixmap
 from isstools.elements.widget_motors import UIWidgetMotors
 from isstools.elements.widget_spectrometer_R import UIWidgetSpectrometerR
 from isstools.dialogs.BasicDialogs import message_box, question_message_box
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_spectrometer_motors.ui')
-spectrometer_image1 = pkg_resources.resource_filename('isstools', 'Resources/spec_image1.png')
-spectrometer_image2 = pkg_resources.resource_filename('isstools', 'Resources/spec_image2.png')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_spectrometer_motors.ui')
+spectrometer_image1 = str(importlib.resources.files('isstools') / 'Resources/spec_image1.png')
+spectrometer_image2 = str(importlib.resources.files('isstools') / 'Resources/spec_image2.png')
 
 class UISpectrometerMotors(*uic.loadUiType(ui_path)):
     def __init__(self,

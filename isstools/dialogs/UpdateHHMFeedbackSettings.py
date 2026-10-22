@@ -1,7 +1,7 @@
-from PyQt5 import uic, QtGui, QtCore
-import pkg_resources
+from qtpy import uic, QtGui, QtCore
+import importlib.resources
 
-ui_path = pkg_resources.resource_filename('isstools', 'dialogs/UpdateHHMFeedbackSettings.ui')
+ui_path = str(importlib.resources.files('isstools') / 'dialogs/UpdateHHMFeedbackSettings.ui')
 
 class UpdatePiezoDialog(*uic.loadUiType(ui_path)):
 

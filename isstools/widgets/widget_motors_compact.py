@@ -1,15 +1,15 @@
-import pkg_resources
-from PyQt5 import uic, QtWidgets
-from PyQt5.QtCore import QThread, QSettings
-from PyQt5.Qt import  QObject
+import importlib.resources
+from qtpy import uic, QtWidgets
+from qtpy.QtCore import QThread, QSettings
+from qtpy.QtCore import QObject
 from bluesky.callbacks import LivePlot
 from bluesky.callbacks.mpl_plotting import LiveScatter
 import bluesky.plan_stubs as bps
 import bluesky.plans as bp
 import numpy as np
 from functools import partial
-from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit
-from PyQt5.QtCore import Qt
+from qtpy.QtWidgets import QLabel, QPushButton, QLineEdit
+from qtpy.QtCore import Qt
 
 # from isstools.dialogs import MoveMotorDialog
 # from isstools.dialogs.BasicDialogs import question_message_box
@@ -24,7 +24,7 @@ from PyQt5.QtCore import Qt
 # from isstools.dialogs.UpdateMotorLimit import UIUpdateMotorLimit
 #
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_motor_widget_compact.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_motor_widget_compact.ui')
 
 
 

@@ -1,12 +1,12 @@
-from PyQt5 import uic, QtCore, QtWidgets
-import pkg_resources
+from qtpy import uic, QtCore, QtWidgets
+import importlib.resources
 
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_info_shutters.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_info_shutters.ui')
 
 
 class UIInfoShutters(*uic.loadUiType(ui_path)):
-    shutters_sig = QtCore.pyqtSignal()
+    shutters_sig = QtCore.Signal()
     def __init__(self,
                  shutters=None,
                  plan_processor=None,

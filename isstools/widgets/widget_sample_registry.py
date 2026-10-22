@@ -1,10 +1,10 @@
 import os
 import sys
 
-import pkg_resources
+import importlib.resources
 import json
-from PyQt5 import uic, QtCore, QtWidgets, QtGui
-from PyQt5.Qt import QObject
+from qtpy import uic, QtCore, QtWidgets, QtGui
+from qtpy.QtCore import QObject
 from bluesky.plan_stubs import mv
 # from isstools.batch.table_batch import XASBatchExperiment
 # from xas.trajectory import trajectory_manager
@@ -26,7 +26,7 @@ from isstools.elements.batch_elements import *
 from isstools.elements.batch_elements import (_create_batch_experiment, _create_new_sample, _create_new_scan, _create_service_item, _clone_scan_item, _clone_sample_item)
 from isstools.elements.elements import element_dict, _check_entry, remove_special_characters
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_sample_registry.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_sample_registry.ui')
 
 
 class UISampleRegistry(*uic.loadUiType(ui_path)):
@@ -103,7 +103,7 @@ class UISampleRegistry(*uic.loadUiType(ui_path)):
     #
     #
     # # def read_json_data(self):
-    # #     json_data = open(pkg_resources.resource_filename('isstools', 'edges_lines.json')).read()
+    # #     json_data = open(str(importlib.resources.files('isstools') / 'edges_lines.json')).read()
     # #     self.element_dict = {}
     # #
     # #     for i in json.loads(json_data):

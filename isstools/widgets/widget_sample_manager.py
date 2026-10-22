@@ -1,17 +1,17 @@
 import re
 import sys
 import numpy as np
-import pkg_resources
+import importlib.resources
 import math
 
-from PyQt5 import uic, QtGui, QtCore, QtWidgets
-from PyQt5.QtGui import QPixmap, QCursor
-from PyQt5.Qt import QObject, Qt
-from PyQt5.QtCore import QThread, QSettings
-from PyQt5.QtWidgets import QMenu, QToolTip, QHBoxLayout, QWidget
+from qtpy import uic, QtGui, QtCore, QtWidgets
+from qtpy.QtGui import QPixmap, QCursor
+from qtpy.QtCore import QObject, Qt
+from qtpy.QtCore import QThread, QSettings
+from qtpy.QtWidgets import QMenu, QToolTip, QHBoxLayout, QWidget
 from isstools.elements.widget_motors import UIWidgetMotors, UIWidgetMotorsWithSlider
 from ..elements.elements import remove_special_characters
-from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem
+from qtpy.QtWidgets import QLabel, QPushButton, QLineEdit, QSizePolicy, QSpacerItem
 import time as ttime
 from datetime import datetime
 from isstools.elements.qmicroscope import Microscope
@@ -20,8 +20,8 @@ from isstools.dialogs.BasicDialogs import message_box, question_message_box
 
 import matplotlib.path as mpltPath
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_sample_manager.ui')
-coordinate_system_file = pkg_resources.resource_filename('isstools', 'icons/Coordinate system.png')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_sample_manager.ui')
+coordinate_system_file = str(importlib.resources.files('isstools') / 'icons/Coordinate system.png')
 
 
 
@@ -100,7 +100,7 @@ sample_position_widget_dict = {
 
 
 class UISampleManager(*uic.loadUiType(ui_path)):
-    # sample_list_changed_signal = QtCore.pyqtSignal()
+    # sample_list_changed_signal = QtCore.Signal()
 
     def __init__(self,
                  sample_stage=None,
@@ -484,7 +484,7 @@ class UISampleManager(*uic.loadUiType(ui_path)):
         item.setText(0, item_str)
         item.setExpanded(True)
         if checkable:
-            item.setFlags(item.flags() | Qt.ItemIsTristate | Qt.ItemIsUserCheckable)
+            item.setFlags(item.flags() | Qt.ItemIsAutoTristate | Qt.ItemIsUserCheckable)
         if force_unchecked:
             item.setCheckState(0, Qt.Unchecked)
         item.kind = kind
@@ -647,7 +647,7 @@ class UISampleManager(*uic.loadUiType(ui_path)):
         delete_points = menu.addAction("Delete points")
         parentPosition = self.treeWidget_samples.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition + QPos)
-        action = menu.exec_()
+        action = menu.exec()
         if action == modify:
             self.modify_item()
         elif action == move_to_sample:
@@ -677,7 +677,7 @@ class UISampleManager(*uic.loadUiType(ui_path)):
                 sample_index = item.index
                 sample = self.sample_manager.sample_at_index(sample_index)
                 dlg = UpdateSampleInfo.UpdateSampleInfo(sample.name, sample.comment)
-                if dlg.exec_():
+                if dlg.exec():
                     new_name, new_comment = dlg.getValues()
                     self.sample_manager.update_sample_at_index(sample_index, new_name, new_comment)
             elif item.kind == 'sample_point':
@@ -686,7 +686,7 @@ class UISampleManager(*uic.loadUiType(ui_path)):
                 sample_point_index = item.index
                 coordinate_dict = self.sample_manager.sample_coordinate_dict_at_index(sample_index, sample_point_index)
                 dlg = UpdateSampleInfo.UpdateSamplePointInfo(sample_name, **coordinate_dict)
-                if dlg.exec_():
+                if dlg.exec():
                     new_coordinate_dict = dlg.getValues()
                     self.sample_manager.update_sample_coordinates_at_index(sample_index, sample_point_index,
                                                                            new_coordinate_dict)

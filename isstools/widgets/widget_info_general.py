@@ -1,6 +1,6 @@
 
-from PyQt5 import uic, QtGui, QtCore
-import pkg_resources
+from qtpy import uic, QtGui, QtCore
+import importlib.resources
 import requests
 import urllib.request
 import numpy as np
@@ -12,7 +12,7 @@ from timeit import default_timer as timer
 from isstools.dialogs.BasicDialogs import message_box
 from isscloudtools.initialize import get_slack_service, get_dropbox_service, get_gmail_service
 import bluesky.plan_stubs as bps
-from PyQt5 import uic, QtWidgets
+from qtpy import uic, QtWidgets
 
 from xas.file_io import make_user_dir
 from isscloudtools.slack import *
@@ -20,7 +20,7 @@ from isscloudtools.gmail import *
 from isscloudtools.dropbox import *
 import uuid
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_info_general.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_info_general.ui')
 
 ROOT_PATH = '/nsls2/data/iss/legacy'
 USER_PATH = 'processed'
@@ -120,7 +120,7 @@ class UIInfoGeneral(*uic.loadUiType(ui_path)):
     def set_user_info(self):
         dlg = UpdateUserDialog.UpdateUserDialog(self.RE.md['year'], self.RE.md['cycle'], self.RE.md['proposal'],
                                                 self.RE.md['SAF'], self.RE.md['PI'], parent=self)
-        if dlg.exec_():
+        if dlg.exec():
             start = timer()
             self.RE.md['year'], self.RE.md['cycle'], self.RE.md['proposal'], self.RE.md['SAF'], self.RE.md[
                 'PI'] = dlg.getValues()
@@ -143,7 +143,7 @@ class UIInfoGeneral(*uic.loadUiType(ui_path)):
 
     def send_results(self):
         dlg = GetEmailAddress.GetEmailAddress('', parent=self)
-        if dlg.exec_():
+        if dlg.exec():
             email_address = dlg.getValue()
             regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
             if re.search(regex, email_address):
@@ -217,7 +217,7 @@ class UIInfoGeneral(*uic.loadUiType(ui_path)):
     #     dropbox_url = dropbox_get_shared_link(self.parent.dropbox_service, dropbox_folder)
     #
     #     dlg = GetEmailAddress.GetEmailAddress('', parent=self)
-    #     if dlg.exec_():
+    #     if dlg.exec():
     #         email_address = dlg.getValue()
     #         regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     #         if re.search(regex, email_address):

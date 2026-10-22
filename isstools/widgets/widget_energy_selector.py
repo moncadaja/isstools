@@ -1,11 +1,11 @@
 
 import json
 
-import pkg_resources
-from PyQt5 import uic
+import importlib.resources
+from qtpy import uic
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_energy_selector.ui')
-ui_path_without_e0 = pkg_resources.resource_filename('isstools', 'ui/ui_energy_selector_without_e0.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_energy_selector.ui')
+ui_path_without_e0 = str(importlib.resources.files('isstools') / 'ui/ui_energy_selector_without_e0.ui')
 
 ROOT_PATH_SHARED = '/nsls2/data/iss/legacy/xf08id'
 
@@ -16,9 +16,9 @@ class UIEnergySelector(*uic.loadUiType(ui_path)):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         if emission:
-           json_data = open(pkg_resources.resource_filename('isstools', 'fluorescence_lines.json')).read()
+           json_data = open(str(importlib.resources.files('isstools') / 'fluorescence_lines.json')).read()
         else:
-            json_data = open(pkg_resources.resource_filename('isstools', 'edges_lines.json')).read()
+            json_data = open(str(importlib.resources.files('isstools') / 'edges_lines.json')).read()
             self.label_edge_line.setText('Line')
 
         self.elements_data = json.loads(json_data)
@@ -48,9 +48,9 @@ class UIEnergySelectorFoil(*uic.loadUiType(ui_path_without_e0)):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         if emission:
-           json_data = open(pkg_resources.resource_filename('isstools', 'fluorescence_lines.json')).read()
+           json_data = open(str(importlib.resources.files('isstools') / 'fluorescence_lines.json')).read()
         else:
-            json_data = open(pkg_resources.resource_filename('isstools', 'edges_lines.json')).read()
+            json_data = open(str(importlib.resources.files('isstools') / 'edges_lines.json')).read()
             self.label_edge_line.setText('Line')
 
         self.elements_data = json.loads(json_data)

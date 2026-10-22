@@ -5,27 +5,27 @@ from datetime import datetime
 from pathlib import Path
 
 # Third-party libraries
-import pkg_resources
+import importlib.resources
 import requests
 
 # PyQt5 modules
-from PyQt5 import uic, QtWidgets, QtCore
-from PyQt5.QtCore import QObject, pyqtSignal, QThread
-from PyQt5.QtWidgets import QListWidgetItem, QAbstractItemView, QMenu, QApplication
-from PyQt5.QtGui import QColor
-from PyQt5.Qt import Qt
+from qtpy import uic, QtWidgets, QtCore
+from qtpy.QtCore import QObject, Signal, QThread
+from qtpy.QtWidgets import QListWidgetItem, QAbstractItemView, QMenu, QApplication
+from qtpy.QtGui import QColor
+from qtpy.QtCore import Qt
 
 # External packages (scientific/data handling)
 from databroker.queries import TimeRange, Key
 
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_processing.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_processing.ui')
 ROOT_PATH = '/nsls2/data/iss/legacy'
 USER_PATH = 'processed'
 
 class ProposalWorker(QObject):
-    finished = pyqtSignal(list)
-    error = pyqtSignal(str)
+    finished = Signal(list)
+    error = Signal(str)
 
     def __init__(self, year, cycle):
         super().__init__()
@@ -127,8 +127,8 @@ class UIProcessing(*uic.loadUiType(ui_path)):
         copy_action = menu.addAction('&Copy to clipboard')
         parentPosition = self.listWidget_acquired_uids.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition + QPos)
-        action = menu.exec_()
-        # action = menu.exec_(self.listWidget_acquired_uids.mapToGlobal(copy_action))
+        action = menu.exec()
+        # action = menu.exec(self.listWidget_acquired_uids.mapToGlobal(copy_action))
 
         if action == copy_action:
             lis = [item.text().split(' - ')[0] for item in items]

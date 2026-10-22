@@ -1,15 +1,15 @@
-import pkg_resources
-from PyQt5 import uic, QtCore
+from qtpy import uic, QtCore
 
 from matplotlib.widgets import RectangleSelector, Cursor
-from PyQt5.Qt import QSplashScreen, QObject
-from PyQt5.QtWidgets import QToolTip, QApplication
-from PyQt5.QtGui import QPixmap, QCursor
+from qtpy.QtWidgets import QSplashScreen
+from qtpy.QtCore import QObject
+from qtpy.QtWidgets import QToolTip, QApplication
+from qtpy.QtGui import QPixmap, QCursor
 from isstools.dialogs.BasicDialogs import message_box
 # from isstools.elements.widget_motors import UIWidgetMotors
 from functools import partial
 from time import sleep
-from matplotlib.backends.backend_qt5agg import (
+from matplotlib.backends.backend_qtagg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
@@ -50,4 +50,4 @@ if __name__ == '__main__':
     main = UIPilatusMonitor()
     main.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

@@ -4,9 +4,9 @@ from datetime import datetime
 
 import bluesky.plan_stubs as bps
 import numpy as np
-import pkg_resources
-from PyQt5 import uic, QtWidgets, QtCore
-from PyQt5.QtCore import QThread, QSettings
+import importlib.resources
+from qtpy import uic, QtWidgets, QtCore
+from qtpy.QtCore import QThread, QSettings
 from bluesky.callbacks import LivePlot
 from isstools.dialogs import (UpdateHHMFeedbackSettings, MoveMotorDialog)
 from isstools.dialogs.BasicDialogs import question_message_box, error_message_box, message_box
@@ -20,7 +20,7 @@ from isstools.elements.figure_update import update_figure, setup_figure
 import xraydb
 from xas.energy_calibration import find_correct_foil
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_beamline_setup.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_beamline_setup.ui')
 
 
 class UIBeamlineSetup(*uic.loadUiType(ui_path)):
@@ -278,7 +278,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
             if self.canvas_gen_scan.motor != '':
                 dlg = MoveMotorDialog.MoveMotorDialog(new_position=event.xdata, motor=self.canvas_gen_scan.motor,
                                                       parent=self.canvas_gen_scan)
-                if dlg.exec_():
+                if dlg.exec():
                     pass
 
     def read_energy_label(self):
@@ -319,7 +319,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
         pars = self.hhm_feedback.current_fb_parameters()
         pars_str = [str(i) for i in pars]
         dlg = UpdateHHMFeedbackSettings.UpdatePiezoDialog(*pars_str, parent=self)
-        if dlg.exec_():
+        if dlg.exec():
             new_pars = dlg.getValues()
             self.hhm_feedback.set_fb_parameters(*new_pars)
             self.current_pitch_position = self.hhm.pitch.position

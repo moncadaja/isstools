@@ -1,13 +1,13 @@
 import re
 import sys
 import numpy as np
-import pkg_resources
+import importlib.resources
 import math
 
-from PyQt5 import uic, QtGui, QtCore, QtWidgets
-from PyQt5.QtCore import pyqtSignal, QObject, QThread
+from qtpy import uic, QtGui, QtCore, QtWidgets
+from qtpy.QtCore import Signal, QObject, QThread
 
-from PyQt5.QtCore import QThread, QSettings
+from qtpy.QtCore import QThread, QSettings
 
 from .widgets import (widget_info_general,
                       widget_scan_manager,
@@ -26,6 +26,7 @@ from .widgets import (widget_info_general,
                       widget_user_manager)
 
 from isstools.elements.batch_motion import SamplePositioner
+from isstools.elements.qt_style import apply_iss_style
 from .elements.emitting_stream import EmittingStream
 from .process_callbacks.callback import ScanProcessingCallback
 from isscloudtools.cloud_dispatcher import CloudDispatcher
@@ -34,7 +35,7 @@ from isscloudtools.gmail import create_html_message, upload_draft, send_draft
 import time as ttime
 from xas.process import process_interpolate_bin
 from isstools.dialogs.BasicDialogs import question_message_box, error_message_box, message_box
-from PyQt5.QtCore import QThread, pyqtSignal
+from qtpy.QtCore import QThread, Signal
 from queue import Queue, Empty
 import time as ttime
 import traceback
@@ -42,7 +43,7 @@ import pprint
 import os
 import json
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_xlive.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_xlive.ui')
 
 
 
@@ -57,9 +58,9 @@ def auto_redraw_factory(fnc):
 
 
 class XliveGui(*uic.loadUiType(ui_path)):
-    plans_changed_signal = QtCore.pyqtSignal()
-    plan_processor_status_changed_signal = QtCore.pyqtSignal()
-    progress_sig = QtCore.pyqtSignal()
+    plans_changed_signal = QtCore.Signal()
+    plan_processor_status_changed_signal = QtCore.Signal()
+    progress_sig = QtCore.Signal()
 
     def __init__(self,
                  data_collection_plan_funcs=None,
@@ -103,6 +104,7 @@ class XliveGui(*uic.loadUiType(ui_path)):
 
 
         super().__init__(*args, **kwargs)
+        apply_iss_style()  # readable buttons/tabs with the Qt6 Fusion fallback style
         self.setupUi(self)
 
         self.RE = RE
@@ -524,7 +526,7 @@ class XliveGui(*uic.loadUiType(ui_path)):
         messageBox.addButton(QtWidgets.QPushButton('Add to the beginning of the queue and pause after'), QtWidgets.QMessageBox.YesRole)
         messageBox.addButton(QtWidgets.QPushButton('Add to the beginning of the queue'), QtWidgets.QMessageBox.YesRole)
         messageBox.addButton(QtWidgets.QPushButton('Add to the end of the queue'), QtWidgets.QMessageBox.YesRole)
-        ret = messageBox.exec_()
+        ret = messageBox.exec()
         if ret == 0:
             plans = []
         elif ret == 1:
@@ -639,8 +641,8 @@ class XliveGui(*uic.loadUiType(ui_path)):
 
 class ProcessingThread(QThread):
 
-    processing_event = pyqtSignal(str, str, int)  # event_type, uid_or_msg, queue_size
-    processing_error = pyqtSignal(str)
+    processing_event = Signal(str, str, int)  # event_type, uid_or_msg, queue_size
+    processing_error = Signal(str)
 
     def __init__(self, gui, print_func=None, processing_ioc_uid=None):
         super().__init__()

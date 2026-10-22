@@ -635,7 +635,6 @@
    <property name="font">
     <font>
      <pointsize>11</pointsize>
-     <weight>50</weight>
      <bold>false</bold>
     </font>
    </property>
@@ -1227,7 +1226,6 @@ to run</string>
         <widget class="QLabel" name="label_96">
          <property name="font">
           <font>
-           <weight>50</weight>
            <bold>false</bold>
           </font>
          </property>
@@ -1264,7 +1262,6 @@ to run</string>
        <widget class="QLabel" name="label_83">
         <property name="font">
          <font>
-          <weight>50</weight>
           <bold>false</bold>
          </font>
         </property>
@@ -1487,7 +1484,6 @@ to run</string>
        <widget class="QLabel" name="label_100">
         <property name="font">
          <font>
-          <weight>50</weight>
           <bold>false</bold>
          </font>
         </property>

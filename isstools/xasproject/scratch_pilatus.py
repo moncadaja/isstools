@@ -1,14 +1,15 @@
-import pkg_resources
-from PyQt5 import uic, QtCore
+import importlib.resources
+from qtpy import uic, QtCore
 from matplotlib.widgets import RectangleSelector, Cursor
-from PyQt5.Qt import QSplashScreen, QObject
-from PyQt5.QtWidgets import QToolTip
-from PyQt5.QtGui import QPixmap, QCursor
+from qtpy.QtWidgets import QSplashScreen
+from qtpy.QtCore import QObject
+from qtpy.QtWidgets import QToolTip
+from qtpy.QtGui import QPixmap, QCursor
 from isstools.dialogs.BasicDialogs import message_box
 from isstools.elements.widget_motors import UIWidgetMotors
 from functools import partial
 from time import sleep
-from matplotlib.backends.backend_qt5agg import (
+from matplotlib.backends.backend_qtagg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.figure import Figure
@@ -17,9 +18,9 @@ import time as ttime
 
 from isstools.elements.figure_update import update_figure
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_pilatus.ui')
-spectrometer_image1 = pkg_resources.resource_filename('isstools', 'Resources/spec_image1.png')
-spectrometer_image2 = pkg_resources.resource_filename('isstools', 'Resources/spec_image2.png')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_pilatus.ui')
+spectrometer_image1 = str(importlib.resources.files('isstools') / 'Resources/spec_image1.png')
+spectrometer_image2 = str(importlib.resources.files('isstools') / 'Resources/spec_image2.png')
 
 class UIPilatusMonitor(*uic.loadUiType(ui_path)):
     def __init__(self,

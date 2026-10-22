@@ -5,10 +5,10 @@ from isstools.widgets import widget_energy_selector
 
 
 import numpy as np
-import pkg_resources
-from PyQt5 import uic, QtWidgets, QtCore, QtGui
-from PyQt5.Qt import Qt
-from PyQt5.QtWidgets import QMenu
+import importlib.resources
+from qtpy import uic, QtWidgets, QtCore, QtGui
+from qtpy.QtCore import Qt
+from qtpy.QtWidgets import QMenu
 
 from isstools.conversions import xray
 from isstools.dialogs import UpdateAngleOffset
@@ -21,10 +21,10 @@ from isstools.dialogs.BasicDialogs import question_message_box, message_box
 import time as ttime
 from isstools.widgets import widget_emission_energy_selector
 
-ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_plan_queue_v2.ui')
+ui_path = str(importlib.resources.files('isstools') / 'ui/ui_plan_queue_v2.ui')
 
 class UIPlanQueue(*uic.loadUiType(ui_path)):
-    # plansChanged = QtCore.pyqtSignal()
+    # plansChanged = QtCore.Signal()
 
     def __init__(self,
                  hhm= None,
@@ -158,7 +158,7 @@ class UIPlanQueue(*uic.loadUiType(ui_path)):
         unpause_all = menu.addAction("&Unpause all")
         parentPosition = self.listWidget_plan_queue.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition+QPos)
-        action = menu.exec_()
+        action = menu.exec()
         if action == delete_selected_plans:
             self.delete_selected_plans()
         elif action == pause_after_selected_index:
