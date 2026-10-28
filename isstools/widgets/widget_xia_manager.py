@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 from qtpy.QtCore import Signal
 
 from isstools.dialogs.BasicDialogs import question_message_box, error_message_box, message_box
-from isstools.elements.figure_update import update_figure, setup_figure
+from isstools.elements.figure_update import update_figure, setup_figure, set_axes_labels
 from isstools.elements.roi_widget import ROIWidget
 
 from isstools.widgets import widget_energy_selector_with_periodic_table
@@ -325,8 +325,7 @@ class UIXIAManager(*uic.loadUiType(ui_path)):
                         self.figure_mca.ax.plot(calibration[0], calibration[1],
                         linestyle="--", color=color)
 
-            self.figure_mca.ax.set_xlabel("Energy /eV", fontsize=12)
-            self.figure_mca.ax.set_ylabel("Counts", fontsize=12)
+            set_axes_labels(self.figure_mca.ax, xlabel='Energy, eV', ylabel='Counts', title='Ge detector MCA spectra')
 
             # Place legend *inside* the plot
             handles, labels = self.figure_mca.ax.get_legend_handles_labels()

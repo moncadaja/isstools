@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
@@ -42,70 +42,70 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="lineEdit_3"/>
+    <item column="1" row="2">
+     <widget class="QLineEdit" name="lineEdit_3" />
     </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_2"/>
+    <item column="1" row="1">
+     <widget class="QLineEdit" name="lineEdit_2" />
     </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="lineEdit_4"/>
+    <item column="1" row="3">
+     <widget class="QLineEdit" name="lineEdit_4" />
     </item>
-    <item row="3" column="0">
+    <item column="0" row="3">
      <widget class="QLabel" name="label_7">
       <property name="text">
        <string>N_measures</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit_1"/>
+    <item column="1" row="0">
+     <widget class="QLineEdit" name="lineEdit_1" />
     </item>
-    <item row="2" column="0">
+    <item column="0" row="2">
      <widget class="QLabel" name="label_6">
       <property name="text">
        <string>N_lines</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item column="0" row="4">
      <widget class="QLabel" name="label_8">
       <property name="text">
        <string>P coeff.</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>Center</string>
+       <string>Center, px</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item column="0" row="1">
      <widget class="QLabel" name="label_5">
       <property name="text">
-       <string>Line</string>
+       <string>Line, px</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="lineEdit_5"/>
+    <item column="1" row="4">
+     <widget class="QLineEdit" name="lineEdit_5" />
     </item>
-    <item row="5" column="0">
+    <item column="0" row="5">
      <widget class="QLabel" name="label_9">
       <property name="text">
        <string>Host</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QLineEdit" name="lineEdit_6"/>
+    <item column="1" row="5">
+     <widget class="QLineEdit" name="lineEdit_6" />
     </item>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources />
  <connections>
   <connection>
    <sender>buttonBox</sender>

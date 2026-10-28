@@ -16,7 +16,7 @@ import xraydb
 import copy
 from isstools.dialogs import MoveMotorDialog
 from isstools.dialogs.BasicDialogs import question_message_box
-from isstools.elements.figure_update import update_figure_with_colorbar, update_figure, setup_figure
+from isstools.elements.figure_update import update_figure_with_colorbar, update_figure, setup_figure, set_axes_labels, motor_label, detector_channel_label, motor_egu, with_unit
 from isstools.elements.transformations import range_step_2_start_stop_nsteps
 from isstools.widgets import widget_johann_tools
 from xas.spectrometer import analyze_elastic_scan
@@ -27,7 +27,7 @@ from .widget_pilatus import UIPilatusMonitor
 from ..elements.liveplots import XASPlot, NormPlot  # , XASPlotX
 from ..elements.elements import get_spectrometer_line_dict
 # from isstools.elements.liveplots import NormPlot
-from isstools.widgets import widget_emission_energy_selector
+from isstools.widgets import widget_energy_selector_with_periodic_table
 
 ui_path = str(importlib.resources.files('isstools') / 'ui/ui_spectrometer.ui')
 
@@ -137,8 +137,9 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
             checkBox_enable.toggled.connect(self.enable_crystal)
             checkBox_enable.toggled.connect(self.update_comboBox_johann_alignment_crystal)
 
-        self.widget_johann_line_selector = widget_emission_energy_selector.UIEmissionLineSelectorEnergyOnly(parent=self,
-                                                                                                            emin=4500)
+        self.widget_johann_line_selector = widget_energy_selector_with_periodic_table.UIEmissionLineSelectorWithPeriodicTable(
+            line_table=widget_energy_selector_with_periodic_table.emission_lines_from_spectrometer_table(emin=4500),
+            settings=self.parent.settings)
         self.layout_johann_emission_line_selector.addWidget(self.widget_johann_line_selector)
         self.comboBox_johann_roll_offset.addItems([str(i) for i in self.johann_emission.allowed_roll_offsets])
         self.push_johann_compute_geometry.clicked.connect(self.johann_compute_geometry)
@@ -152,6 +153,13 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
                                   (self.motor_dictionary[motor]['spectrometer_kind'] == 'johann')]
 
         self.comboBox_johann_scan_motor.addItems(self.johann_motor_list)
+        self.comboBox_johann_scan_motor.currentIndexChanged.connect(self.update_johann_motor_scan_units)
+        self.update_johann_motor_scan_units()
+        for axis in ('x', 'y', 'pitch', 'yaw'):
+            egu = motor_egu(self.motor_dictionary, name=f'six_axes_stage_{axis}')
+            if egu:
+                getattr(self, f'doubleSpinBox_pcl_range_{axis}').setSuffix(f' {egu}')
+                getattr(self, f'doubleSpinBox_pcl_step_{axis}').setSuffix(f' {egu}')
         self.push_johann_motor_scan.clicked.connect(self.run_johann_motor_scan)
 
         # Johann alignment
@@ -241,9 +249,23 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
             liveplot_list.append(_norm_plot)
             # when the liveplot is created, we also update the canvas motor:
             self._set_canvas_motor_from_name(liveplot_kwargs['curr_mot_name'])
+            x_label = motor_label(self.motor_dictionary, name=liveplot_kwargs['curr_mot_name']) or liveplot_kwargs['curr_mot_name']
+            set_axes_labels(self.figure_scan.ax, xlabel=x_label,
+                            ylabel=detector_channel_label(liveplot_kwargs['channel'], liveplot_kwargs['channel_den']),
+                            title=f"Spectrometer scan: {liveplot_kwargs['result_name']} vs {x_label}")
         except:
             print(f'could not make liveplot for scan {plan_name}')
         return liveplot_list
+
+    def update_johann_motor_scan_units(self, *args):
+        egu = motor_egu(self.motor_dictionary, description=self.comboBox_johann_scan_motor.currentText())
+        self.label_3.setText(with_unit('Range', egu))
+        self.label_4.setText(with_unit('Step', egu))
+
+    def _axis_label_with_units(self, label):
+        if label == 'energy':
+            return 'Energy, eV'
+        return motor_label(self.motor_dictionary, name=label, description=label) or label
 
     def _set_canvas_motor_from_name(self, motor_name):
         for motor_key, motor_dict in self.motor_dictionary.items():
@@ -329,8 +351,12 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
 
         if plotting_one_curve or plotting_many_curves_end:
             print('concluding the data plot')
-            figure.ax.set_xlabel(x_label)
-            figure.ax.set_ylabel(y_label)
+            y_labels = {'intensity': 'Intensity, counts' if plotting_one_curve else 'Normalized intensity',
+                        'fwhm_value': 'FWHM, eV', 'max_value': 'Peak intensity, counts'}
+            title = f'{scan_motor_description} scan' if scan_motor_description else \
+                ('Alignment analysis' if figure is self.figure_proc else 'Spectrometer scan')
+            set_axes_labels(figure.ax, xlabel=self._axis_label_with_units(x_label),
+                            ylabel=y_labels.get(y_label, y_label), title=title)
             # figure.ax.set_xlim(x.min(), x.max())
 
             figure.ax.legend(loc='upper left', frameon=False)
@@ -513,7 +539,7 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
 
     def johann_compute_geometry(self):
         self._johann_update_crystal_config()
-        energy = float(self.widget_johann_line_selector.edit_E.text())
+        energy = self.widget_johann_line_selector.energy
         bragg = self.johann_emission.e2bragg(energy)
         roll_offset = self.johann_emission.suggest_roll_offset(bragg)
         reflectivity = self.johann_emission.e2reflectivity(energy)
@@ -533,7 +559,7 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
         self.johann_emission.set_roll_offset(
             roll_offset)  # this will compute all the motor positions and will save the config to settings
 
-        energy = float(self.widget_johann_line_selector.edit_E.text())
+        energy = self.widget_johann_line_selector.energy
         self.johann_emission.move(energy=energy)
 
         self.johann_emission.initialized = True
@@ -577,7 +603,7 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
 
     # Johann alignment
     def _get_default_johann_alignment_parameters(self):
-        _element_guess = self.widget_johann_line_selector.comboBox_element.currentText()
+        _element_guess = self.widget_johann_line_selector.element
         _edge_guess = "K" if xraydb.atomic_number(_element_guess) < 55 else "L3"
         self._default_johann_alignment_paramters = \
             {'yaw_tune': {'motor_check': True,
@@ -1069,8 +1095,8 @@ class UISpectrometer(*uic.loadUiType(ui_path)):
         x = df[motor_key].values
         self.figure_proc.ax.plot(x, fwhm, 'o')
         self.figure_proc.ax.plot(x, res, '+')
-        self.figure_proc.ax.set_ylabel('FWHM/resolution, eV')
-        self.figure_proc.ax.set_xlabel(motor_key)
+        set_axes_labels(self.figure_proc.ax, xlabel=self._axis_label_with_units(motor_key),
+                        ylabel='FWHM / resolution, eV', title='Johann alignment: linewidth vs tweak motor')
 
         self.figure_proc.tight_layout()
         self.canvas_proc.draw_idle()

@@ -16,7 +16,7 @@ from matplotlib.figure import Figure
 import matplotlib.patches as patches
 import time as ttime
 
-from isstools.elements.figure_update import update_figure
+from isstools.elements.figure_update import update_figure, set_axes_labels
 
 ui_path = str(importlib.resources.files('isstools') / 'ui/ui_pilatus.ui')
 spectrometer_image1 = str(importlib.resources.files('isstools') / 'Resources/spec_image1.png')
@@ -165,10 +165,10 @@ class UIPilatusMonitor(*uic.loadUiType(ui_path)):
             _det_state = self.pilatus100k_device.cam.detector_state.get()
             if _det_state == 1:
                 self.label_detector_state.setText('Acquiring')
-                self.label_detector_state.setStyleSheet('background-color: rgb(95,249,95)')
+                self.label_detector_state.setStyleSheet('background-color: rgb(95,249,95); color: black')
             else:
                 self.label_detector_state.setText('Idle')
-                self.label_detector_state.setStyleSheet('background-color: rgb(255,0,0)')
+                self.label_detector_state.setStyleSheet('background-color: rgb(255,0,0); color: white')
 
 
             self.label_current_energy.setText(f'{_energy:4.1f} eV')
@@ -428,6 +428,8 @@ class UIPilatusMonitor(*uic.loadUiType(ui_path)):
 
 
             # self.figure_pilatus_image.ax.autoscale(True)
+            set_axes_labels(self.figure_pilatus_image.ax, xlabel='Detector column, px', ylabel='Detector row, px',
+                            title='Pilatus 100k image, counts')
             self.figure_pilatus_image.ax.set_xticks([])
             self.figure_pilatus_image.ax.set_yticks([])
             self.canvas_pilatus_image.draw_idle()

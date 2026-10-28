@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
@@ -41,7 +41,7 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_8">
-     <item row="0" column="3">
+     <item column="3" row="0">
       <widget class="QLabel" name="label_110">
        <property name="font">
         <font>
@@ -54,7 +54,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="3">
+     <item column="3" row="2">
       <widget class="QLabel" name="label_113">
        <property name="font">
         <font>
@@ -67,7 +67,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item column="0" row="0">
       <widget class="QLabel" name="label_109">
        <property name="font">
         <font>
@@ -80,7 +80,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item column="0" row="2">
       <widget class="QLabel" name="label_112">
        <property name="font">
         <font>
@@ -93,7 +93,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item column="2" row="1">
       <widget class="QComboBox" name="comboBox_channels">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -109,7 +109,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="4">
+     <item column="4" row="2">
       <widget class="QLineEdit" name="edit_gen_exp_time">
        <property name="font">
         <font>
@@ -122,7 +122,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item column="0" row="1">
       <widget class="QLabel" name="label_108">
        <property name="font">
         <font>
@@ -135,7 +135,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item column="1" row="2">
       <widget class="QComboBox" name="comboBox_detectors_den">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -151,7 +151,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="3">
+     <item column="3" row="1">
       <widget class="QLabel" name="label_111">
        <property name="font">
         <font>
@@ -164,7 +164,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item column="2" row="2">
       <widget class="QComboBox" name="comboBox_channels_den">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -180,7 +180,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item column="1" row="1">
       <widget class="QComboBox" name="comboBox_detectors">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -196,7 +196,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
+     <item column="4" row="0">
       <widget class="QLineEdit" name="edit_gen_range">
        <property name="font">
         <font>
@@ -209,7 +209,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item column="1" row="0">
       <widget class="QComboBox" name="comboBox_motors">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -225,7 +225,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
+     <item column="4" row="1">
       <widget class="QLineEdit" name="edit_gen_step">
        <property name="font">
         <font>
@@ -238,7 +238,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item column="2" row="0">
       <widget class="QCheckBox" name="checkBox_user_motors">
        <property name="text">
         <string>User Motors only</string>
@@ -248,7 +248,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="5">
+     <item column="5" row="2">
       <widget class="QLabel" name="label_114">
        <property name="font">
         <font>
@@ -261,7 +261,7 @@
        </property>
       </widget>
      </item>
-    </layout>
+    <item column="5" row="0"><widget class="QLabel" name="label_gen_range_units"><property name="text"><string /></property></widget></item><item column="5" row="1"><widget class="QLabel" name="label_gen_step_units"><property name="text"><string /></property></widget></item></layout>
    </widget>
    <widget class="QPushButton" name="push_gen_scan">
     <property name="geometry">
@@ -301,7 +301,7 @@
       <height>481</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="plot_gen_scan"/>
+    <layout class="QVBoxLayout" name="plot_gen_scan" />
    </widget>
    <widget class="QLabel" name="label_60">
     <property name="geometry">
@@ -531,9 +531,9 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>140</y>
+      <y>176</y>
       <width>221</width>
-      <height>91</height>
+      <height>45</height>
      </rect>
     </property>
     <property name="font">
@@ -543,7 +543,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Adjust beamline components (ion chamber gas composition, ion channel high voltage settings, filter thickness, beam position monitor settings and harmonic rejection mirror coating </string>
+     <string>Set optics, filters, BPM and ion chamber gas/HV for the selected energy</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -659,7 +659,7 @@
       <height>101</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="layout_energy_selector_prepare"/>
+    <layout class="QHBoxLayout" name="layout_energy_selector_prepare" />
    </widget>
    <widget class="QCheckBox" name="checkBox_quick_tune_scanning">
     <property name="geometry">
@@ -677,7 +677,7 @@
      <bool>true</bool>
     </property>
    </widget>
-  </widget>
+  <widget class="QCheckBox" name="checkBox_set_ic_absorption"><property name="geometry"><rect><x>270</x><y>134</y><width>141</width><height>21</height></rect></property><property name="text"><string>Set IC absorption</string></property><property name="toolTip"><string>Compute the He/N2 mix for this photoabsorption per 14.5 cm ion chamber and set the MFCs during Prepare beamline</string></property></widget><widget class="QDoubleSpinBox" name="doubleSpinBox_ic_absorption"><property name="geometry"><rect><x>415</x><y>133</y><width>71</width><height>22</height></rect></property><property name="suffix"><string> %</string></property><property name="decimals"><number>1</number></property><property name="minimum"><double>0.5</double></property><property name="maximum"><double>95.0</double></property><property name="value"><double>4.0</double></property><property name="singleStep"><double>0.5</double></property><property name="enabled"><bool>false</bool></property></widget><widget class="QLabel" name="label_ic_gas_mix"><property name="geometry"><rect><x>270</x><y>156</y><width>221</width><height>18</height></rect></property><property name="text"><string /></property></widget></widget>
   <widget class="QLabel" name="label_gains_3">
    <property name="geometry">
     <rect>
@@ -964,7 +964,7 @@
       <height>101</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="layout_energy_selector_calibration"/>
+    <layout class="QHBoxLayout" name="layout_energy_selector_calibration" />
    </widget>
    <widget class="QLabel" name="label_62">
     <property name="geometry">
@@ -1005,6 +1005,6 @@
    </widget>
   </widget>
  </widget>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

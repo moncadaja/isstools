@@ -19,14 +19,14 @@ from .widgets import (widget_info_general,
                       widget_xia_manager,
                       widget_info_shutters,
                       widget_info_beamline,
-                      widget_sample_registry,
+                      widget_crystal_finder,
                       widget_spectrometer,
                       widget_plan_queue,
                       widget_sample_manager,
                       widget_user_manager)
 
 from isstools.elements.batch_motion import SamplePositioner
-from isstools.elements.qt_style import apply_iss_style
+from isstools.elements.qt_style import THEMES, DEFAULT_THEME, apply_theme
 from .elements.emitting_stream import EmittingStream
 from .process_callbacks.callback import ScanProcessingCallback
 from isscloudtools.cloud_dispatcher import CloudDispatcher
@@ -98,14 +98,20 @@ class XliveGui(*uic.loadUiType(ui_path)):
                  sample_stage=None,
                  tune_elements=None,
                  ic_amplifiers=None,
+                 mfc_dict=None,
                  print_to_gui=None,
                  window_title=None,
                  *args, **kwargs):
 
 
         super().__init__(*args, **kwargs)
-        apply_iss_style()  # readable buttons/tabs with the Qt6 Fusion fallback style
+        self.settings = QSettings(window_title, 'XLive')
+        self.theme_name = self.settings.value('theme', defaultValue=DEFAULT_THEME, type=str)
+        if self.theme_name not in THEMES:
+            self.theme_name = DEFAULT_THEME
+        apply_theme(self.theme_name)
         self.setupUi(self)
+        self._build_theme_menu()
 
         self.RE = RE
         self.db = db
@@ -154,7 +160,6 @@ class XliveGui(*uic.loadUiType(ui_path)):
         hhm.trajectory_progress.subscribe(self.update_progress)
         self.progress_sig.connect(self.update_progressbar)
         self.progressBar.setValue(0)
-        self.settings = QSettings(self.window_title, 'XLive')
 
 
 
@@ -317,6 +322,7 @@ class XliveGui(*uic.loadUiType(ui_path)):
                                                                         attenuator_camera=detector_dict['Camera SP6']['device'],
                                                                         encoder_pb = self.hhm_encoder,
                                                                         aux_plan_funcs=aux_plan_funcs,
+                                                                        mfc_dict=mfc_dict,
                                                                         parent=self)
         self.layout_info_beamline.addWidget(self.widget_info_beamline)
 
@@ -339,19 +345,9 @@ class XliveGui(*uic.loadUiType(ui_path)):
                                                                       )
             self.layout_xia_manager.addWidget(self.widget_xia_manager)
 
-        print('widget sample registry loading', ttime.ctime())
-        self.widget_sample_registry = widget_sample_registry.UISampleRegistry(motor_dict,
-                                                                            camera_dict,
-                                                                            hhm,
-                                                                            trajectory_manager,
-                                                                            RE,
-                                                                            # db,
-                                                                            sample_stage,
-                                                                            self,
-                                                                            service_plan_funcs,
-                                                                            {}  # plan funcs
-                                                                            )
-        self.layout_sample_registry.addWidget(self.widget_sample_registry)
+        print('widget crystal finder loading', ttime.ctime())
+        self.widget_crystal_finder = widget_crystal_finder.UICrystalFinder()
+        self.layout_crystal_finder.addWidget(self.widget_crystal_finder)
 
 
         print('widget spectrometer loading', ttime.ctime())
@@ -509,6 +505,21 @@ class XliveGui(*uic.loadUiType(ui_path)):
             if not self.plan_processor.RE_is_running:
                 self.plan_processor.update_status('idle')
             # self.push_re_abort.setEnabled(1)
+
+    def _build_theme_menu(self):
+        menu_theme = self.menubar.addMenu('View').addMenu('Theme')
+        group = QtGui.QActionGroup(self)
+        for name in THEMES:
+            action = menu_theme.addAction(name)
+            action.setCheckable(True)
+            action.setChecked(name == self.theme_name)
+            action.triggered.connect(lambda checked=False, name=name: self.set_theme(name))
+            group.addAction(action)
+
+    def set_theme(self, name):
+        apply_theme(name)
+        self.theme_name = name
+        self.settings.setValue('theme', name)
 
     def update_re_state(self):
         color = self.state_colors.get(self.RE.state, QtGui.QColor(100, 100, 100))  # default: gray

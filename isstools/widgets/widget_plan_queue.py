@@ -94,7 +94,7 @@ class UIPlanQueue(*uic.loadUiType(ui_path)):
             self.pushButton_run_queue.setEnabled(True)
             self.pushButton_pause_queue.setEnabled(False)
 
-            self.label_plan_processor_status_indicator.setStyleSheet('background-color: rgb(0,94,0)')
+            self.label_plan_processor_status_indicator.setStyleSheet('background-color: rgb(0,94,0); color: white')
             self.label_plan_processor_status_text.setText('Idle')
             self.label_plan_processor_current_plan.setText(f'Current plan:')
 
@@ -102,7 +102,7 @@ class UIPlanQueue(*uic.loadUiType(ui_path)):
             self.pushButton_run_queue.setEnabled(False)
             self.pushButton_pause_queue.setEnabled(True)
 
-            self.label_plan_processor_status_indicator.setStyleSheet('background-color: rgb(95,249,95)')
+            self.label_plan_processor_status_indicator.setStyleSheet('background-color: rgb(95,249,95); color: black')
             self.label_plan_processor_status_text.setText('Running')
             top_item = self.listWidget_plan_queue.item(0)
             top_item.setForeground(QtGui.QColor('green'))

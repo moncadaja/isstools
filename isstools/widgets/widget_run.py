@@ -11,7 +11,7 @@ from matplotlib.figure import Figure
 from xas.xray import generate_energy_grid
 
 from isstools.dialogs.BasicDialogs import question_message_box, message_box
-from isstools.elements.figure_update import update_figure, setup_figure
+from isstools.elements.figure_update import update_figure, setup_figure, set_axes_labels
 
 from bluesky.callbacks import LivePlot
 
@@ -260,7 +260,9 @@ class UIRun(*uic.loadUiType(ui_path)):
             energy_masked, reference_masked = self._mask_data(energy, reference)
             self.figure.ax3.plot(energy_masked, reference_masked, color='b')
 
-        self.figure.ax3.set_xlabel('Energy, eV', fontsize=14)
+        set_axes_labels(self.figure.ax1, xlabel='Energy, eV', ylabel='Transmission, ln(I0/It)', title='Processed scan')
+        set_axes_labels(self.figure.ax2, ylabel='Total fluorescence, If/I0 (ratio)')
+        set_axes_labels(self.figure.ax3, ylabel='Reference, ln(It/Ir)')
         # self.figure.tight_layout()
         self.canvas.draw()
 
@@ -283,6 +285,15 @@ class UIRun(*uic.loadUiType(ui_path)):
             motor_name = 'time'
 
         update_figure([self.figure.ax2, self.figure.ax1, self.figure.ax3], self.toolbar, self.canvas)
+        if motor_name == 'time':
+            x_label = 'Time, s'
+        elif plan_name == 'step_scan_johann_xes_plan':
+            x_label = 'Emission energy, eV'
+        else:
+            x_label = 'Energy, eV'
+        set_axes_labels(self.figure.ax1, xlabel=x_label, ylabel='Transmission, ln(I0/It)', title='Live scan')
+        set_axes_labels(self.figure.ax2, ylabel='Reference, ln(It/Ir)')
+        set_axes_labels(self.figure.ax3, ylabel='Fluorescence, If/I0 (ratio)')
 
         xasplot_list = []
         liveplot_kwargs_list = [{'num_name': 'apb_ave_ch1_mean', 'den_name': 'apb_ave_ch2_mean', 'result_name': 'Transmission',

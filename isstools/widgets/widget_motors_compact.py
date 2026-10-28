@@ -49,7 +49,7 @@ class UIWidgetMotorsCompact(*uic.loadUiType(ui_path)):
         # self.layout_motor_widget.addWidget(self.label_motor_description)
 
         self.label_mov_status = self.label_status
-        self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60)')
+        self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60); color: white')
         self._motor_object.motor_is_moving.subscribe(self.update_moving_label)
 
         self.button_move_decrement = self.pushButton_decrease
@@ -65,9 +65,9 @@ class UIWidgetMotorsCompact(*uic.loadUiType(ui_path)):
 
     def update_moving_label(self, value, **kwargs):
         if value == 1:
-            self.label_mov_status.setStyleSheet('background-color: rgb(95,249,95)')
+            self.label_mov_status.setStyleSheet('background-color: rgb(95,249,95); color: black')
         else:
-            self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60)')
+            self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60); color: white')
 
     def update_decrement(self):
         _current_step_reading = self.lineEdit_step.text()

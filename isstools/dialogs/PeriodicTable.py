@@ -1,19 +1,13 @@
-from qtpy import uic, QtGui, QtCore
 import importlib.resources
-from qtpy.QtWidgets import QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem, QPushButton
-from qtpy.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QPushButton, QLabel
+
+from qtpy import uic, QtGui, QtCore
+from qtpy.QtCore import Signal
+from qtpy.QtWidgets import QLabel
 
 ui_path = str(importlib.resources.files('isstools') / 'dialogs/PeriodicTable.ui')
 
-from qtpy import uic, QtGui, QtCore
-from qtpy.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QMainWindow
-from qtpy.QtCore import Signal
-
-
-
-class ElementLabel(QLabel):
-
-    accessible_elements =[
+# elements whose edges/lines are reachable with the ISS mono (default selectable set)
+ISS_ACCESSIBLE_ELEMENTS = [
         'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn',
         'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr',
         'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd',
@@ -25,57 +19,50 @@ class ElementLabel(QLabel):
         'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf'
     ]
 
+CATEGORY_COLORS = {
+    'Alkali metals': '#FF6666',
+    'Alkaline earth metals': '#FFDEAD',
+    'Transition metals': '#FFD700',
+    'Post-transition metals': '#CCCCCC',
+    'Metalloids': '#ADEAEA',
+    'Reactive nonmetals': '#9AFF9A',
+    'Noble gases': '#B0E0E6',
+    'Lanthanides': '#FFA07A',
+    'Actinides': '#DA70D6',
+    'Unknown properties': '#D3D3D3',
+}
 
-    category_colors = {
-        'Alkali metals': '#FF6666',
-        'Alkaline earth metals': '#FFDEAD',
-        'Transition metals': '#FFD700',
-        'Post-transition metals': '#CCCCCC',
-        'Metalloids': '#ADEAEA',
-        'Reactive nonmetals': '#9AFF9A',
-        'Noble gases': '#B0E0E6',
-        'Lanthanides': '#FFA07A',
-        'Actinides': '#DA70D6',
-        'Unknown properties': '#D3D3D3',
-    }
-    """Custom QLabel to handle mouse clicks and store element data."""
-    def __init__(self, symbol, category, *args, **kwargs):
+
+class ElementLabel(QLabel):
+    clicked = Signal(str)
+
+    def __init__(self, symbol, category, accessible, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.symbol = symbol  # Store the element symbol
-
-        self.setAlignment(QtCore.Qt.AlignCenter)  # Center the text
+        self.symbol = symbol
+        self.accessible = accessible
+        self.setAlignment(QtCore.Qt.AlignCenter)
         font = QtGui.QFont('Arial', 12)
-
-        if symbol in self.accessible_elements:
-            font.setBold(True)  # Make the font bold for accessible elements
-            self.setStyleSheet("color: black;")  # Set the text color to black for emphasis
-        else:
-            font.setBold(False)  # Regular font for non-accessible elements
-            self.setStyleSheet("color: darkgray;")  # Set dark gray text color
-
-        self.setFont(font)  # Apply the font settings
-
-        # Set the background color based on the element's category
-
-        color = self.category_colors.get(category, '#FFFFFF')
-        self.setStyleSheet(self.styleSheet() + f' background-color: {color}; border: 1px solid black;')
-
-        self.setText(self.symbol)  # Set the symbol as the text
-        self.setFixedSize(40, 40)  # Set a fixed size for each label
-        #qiotself.setFont(QtGui.QFont('Arial', 12))
+        font.setBold(accessible)
+        self.setFont(font)
+        text_color = 'black' if accessible else 'darkgray'
+        background = CATEGORY_COLORS.get(category, '#FFFFFF') if accessible else '#F0F0F0'
+        self.setStyleSheet(f'color: {text_color}; background-color: {background}; border: 1px solid black;')
+        self.setText(symbol)
+        self.setFixedSize(40, 40)
+        if accessible:
+            self.setCursor(QtCore.Qt.PointingHandCursor)
 
     def mousePressEvent(self, event):
-        """Handle the mouse click event on an element."""
-        if event.button() == QtCore.Qt.LeftButton:
-            self.element_clicked(self.symbol)
-
-    def element_clicked(self, symbol):
-        """Callback for when an element is clicked."""
-        print(f"Element clicked: {symbol}")
-        # You can replace this with any other function, e.g., show element details
+        if event.button() == QtCore.Qt.LeftButton and self.accessible:
+            self.clicked.emit(self.symbol)
 
 
 class PeriodicTableWidget(*uic.loadUiType(ui_path)):
+    """Pop-up periodic table; emits ``element_selected(symbol)`` and closes on a click.
+
+    ``accessible_elements`` limits which symbols can be clicked (default: the
+    ISS energy range); everything else is drawn greyed out.
+    """
     element_selected = Signal(str)
 
     elements = {
@@ -148,22 +135,20 @@ class PeriodicTableWidget(*uic.loadUiType(ui_path)):
         102: (9, 12, 'No', 'Actinides'), 103: (9, 13, 'Lr', 'Actinides'),
     }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, accessible_elements=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
-
         self.setWindowTitle("Periodic Table")
+        self.accessible_elements = set(ISS_ACCESSIBLE_ELEMENTS if accessible_elements is None else accessible_elements)
         self.push_close.clicked.connect(self.close)
         self.init_table()
 
     def init_table(self):
         for _, (row, col, symbol, category) in self.elements.items():
-            label = ElementLabel(symbol, category)
-            label.element_clicked = self.handle_element_click  # Connect click handler
+            label = ElementLabel(symbol, category, symbol in self.accessible_elements)
+            label.clicked.connect(self.handle_element_click)
             self.gridLayout_periodic_table.addWidget(label, row, col)
-        self.accessible_elements = label.accessible_elements
 
     def handle_element_click(self, symbol):
-        if symbol in self.accessible_elements:
-            self.element_selected.emit(symbol)  # Emit signal
-            self.close()
+        self.element_selected.emit(symbol)
+        self.close()

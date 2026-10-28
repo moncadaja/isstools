@@ -1,5 +1,6 @@
 
 from qtpy import uic, QtGui, QtCore
+from isstools.dialogs.PeriodicTable import PeriodicTableWidget
 import importlib.resources
 import requests
 import urllib.request
@@ -13,6 +14,7 @@ from isstools.dialogs import UpdateUserDialog, SetEnergy, GetEmailAddress
 from timeit import default_timer as timer
 from isstools.dialogs.BasicDialogs import message_box, question_message_box
 import bluesky.plan_stubs as bps
+from xas.ion_chamber import composition_from_flows, ion_chamber_flux, pips_flux
 
 
 import uuid
@@ -41,12 +43,14 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
                  attenuator_camera=None,
                  encoder_pb=None,
                  aux_plan_funcs=None,
+                 mfc_dict=None,
                  parent = None,
 
                  *args, **kwargs):
 
         super().__init__(*args, **kwargs)
         self.setupUi(self)
+        self.mfc_dict = mfc_dict
         # Start QTimer to display current day and time
 
 
@@ -116,6 +120,8 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
             reference_foils.append('--')
         for foil in reference_foils:
             self.comboBox_reference_foils.addItem(foil)
+        self.reference_foil_elements = reference_foils[:-1]
+        self.push_reference_foil_table.clicked.connect(self.show_reference_foil_table)
 
         with open(f'{ROOT_PATH_SHARED}/settings/json/attenuator.json') as fp:
             attenuators = [item['attenuator'] for item in json.load(fp)]
@@ -138,15 +144,15 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
                 if not self.hhm_feedback.status_err: # no error
                     self.label_feedback_status.setText('Feedback on')
                     self.label_feedback_status.setStyleSheet('color: rgb(19, 139, 67)')
-                    self.label_feedback_status_indicator.setStyleSheet('background-color: rgb(95, 249, 95)')
+                    self.label_feedback_status_indicator.setStyleSheet('background-color: rgb(95, 249, 95); color: black')
                 else: # error
                     self.label_feedback_status.setText(f'Feedback error: {self.hhm_feedback.status_msg}')
                     self.label_feedback_status.setStyleSheet('color: rgb(180, 0, 0)')
-                    self.label_feedback_status_indicator.setStyleSheet('background-color: rgb(255, 128, 0)')
+                    self.label_feedback_status_indicator.setStyleSheet('background-color: rgb(255, 128, 0); color: black')
             else:
                 self.label_feedback_status.setText('Feedback off')
                 self.label_feedback_status.setStyleSheet('color: rgb(190,190,190)')
-                self.label_feedback_status_indicator.setStyleSheet('background-color: rgb(0,94,0)')
+                self.label_feedback_status_indicator.setStyleSheet('background-color: rgb(0,94,0); color: white')
 
             i0_gain = self.ic_amplifiers['i0_amp'].get_gain()[0]
             it_gain = self.ic_amplifiers['it_amp'].get_gain()[0]
@@ -159,16 +165,16 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
             self.label_gain_if.setText(f'I<sub>f</sub>: 10<sup>{if_gain}</sup>')
             if (self.RE.state == 'idle'):
                 self.label_RE.setText('Run Engine is idle')
-                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(0,94,0)')
+                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(0,94,0); color: white')
             elif (self.RE.state == 'running'):
                 self.label_RE.setText('Run Engine is running')
-                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(95,249,95)')
+                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(95,249,95); color: black')
             elif (self.RE.state == 'paused'):
                 self.label_RE.setText('Run Engine is paused')
-                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(255,153,51)')
+                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(255,153,51); color: black')
             elif (self.RE.state == 'abort'):
                 self.label_RE.setText('Run Engine is aborted')
-                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(255,0,0)')
+                self.label_RE_status_indicator.setStyleSheet('background-color: rgb(255,0,0); color: white')
 
             #reference foil
             barcode = self.foil_camera.barcode1
@@ -206,20 +212,72 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
                                {'ch':self.apb.ch4.value, 'label':self.label_iff_saturation }]
             for element in saturation_list:
                 if element['ch'] < 7000:
-                    element['label'].setStyleSheet('background-color: rgb(95,249,95)')
+                    element['label'].setStyleSheet('background-color: rgb(95,249,95); color: black')
                     element['label'].setText('In range')
                 else:
-                    element['label'].setStyleSheet('background-color: rgb(255,0,0)')
+                    element['label'].setStyleSheet('background-color: rgb(255,0,0); color: white')
                     element['label'].setText('Saturated')
 
             #update feedback heartbeat
             self.update_feedback_gui_components()
+
+            self.update_flux(energy,
+                             gains={'i0': i0_gain, 'it': it_gain, 'ir': ir_gain, 'iff': if_gain},
+                             voltages_mV={'i0': self.apb.ch1.value, 'it': self.apb.ch2.value,
+                                          'ir': self.apb.ch3.value, 'iff': self.apb.ch4.value},
+                             offsets_mV={'i0': self.apb.ch1_offset.value, 'it': self.apb.ch2_offset.value,
+                                         'ir': self.apb.ch3_offset.value, 'iff': self.apb.ch4_offset.value},
+                             saturated={'i0': self.apb.ch1.value >= 7000, 'it': self.apb.ch2.value >= 7000,
+                                        'ir': self.apb.ch3.value >= 7000, 'iff': self.apb.ch4.value >= 7000})
 
 
 
         except Exception as e:
             print(e)
 
+
+    def update_flux(self, energy, gains, voltages_mV, offsets_mV, saturated):
+        """I0 shows the flux delivered to the sample; It/Ir/If the flux arriving at the detector.
+
+        The dark offset is subtracted when that leaves a positive signal. If it does not but the raw
+        reading is positive, the raw reading is used and the box is greyed: the stored offset is then
+        suspect (offsets are in mV at the gain they were measured with, so a gain change invalidates them).
+        """
+        fields = {key: getattr(self, f'lineEdit_{key}_flux') for key in ('i0', 'it', 'ir', 'iff')}
+        try:
+            if self.mfc_dict is None:
+                raise ValueError('no MFC devices')
+            fractions = composition_from_flows({gas: mfc.flow.value for gas, mfc in self.mfc_dict.items()})
+            if fractions is None:
+                raise ValueError('no gas flow')
+            for key, field in fields.items():
+                raw_mV = voltages_mV[key]
+                corrected_mV = raw_mV - offsets_mV[key]
+                if saturated[key] or raw_mV <= 0:
+                    field.setText('---')
+                    field.setStyleSheet('')
+                    field.setToolTip('')
+                    continue
+                offset_applied = corrected_mV > 0
+                volts = (corrected_mV if offset_applied else raw_mV) / 1000
+                if key == 'iff':
+                    flux = pips_flux(volts, gains[key], energy).incident
+                else:
+                    fluxes = ion_chamber_flux(volts, gains[key], energy, fractions)
+                    flux = fluxes.transmitted if key == 'i0' else fluxes.incident
+                field.setText(f'{flux:.2e}')
+                if offset_applied:
+                    field.setStyleSheet('')
+                    field.setToolTip('')
+                else:
+                    field.setStyleSheet('color: gray; font-style: italic')
+                    field.setToolTip(f'Offset not subtracted: reading {raw_mV:.1f} mV minus stored offset '
+                                     f'{offsets_mV[key]:.1f} mV would be negative. Re-run "Get offsets" at the current gain.')
+        except Exception:
+            for field in fields.values():
+                field.setText('---')
+                field.setStyleSheet('')
+                field.setToolTip('')
 
     def update_beam_current(self, **kwargs):
         # return
@@ -230,31 +288,31 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
         if kwargs['value'] == 0:
             self.label_accelerator_status.setText('Beam available')
             self.label_accelerator_status.setStyleSheet('color: rgb(19,139,67)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(95,249,95)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(95,249,95); color: black')
         elif kwargs['value'] == 1:
             self.label_accelerator_status.setText('Setup')
             self.label_accelerator_status.setStyleSheet('color: rgb(209,116,42)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(246,229,148)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(246,229,148); color: black')
         elif kwargs['value'] == 2:
             self.label_accelerator_status.setText('Accelerator studies')
             self.label_accelerator_status.setStyleSheet('color: rgb(209,116,42)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(209,116,42)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(209,116,42); color: white')
         elif kwargs['value'] == 3:
             self.label_accelerator_status.setText('Beam has dumped')
             self.label_accelerator_status.setStyleSheet('color: rgb(237,30,30)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(237,30,30)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(237,30,30); color: white')
         elif kwargs['value'] == 4:
             self.label_accelerator_status.setText('Maintenance')
             self.label_accelerator_status.setStyleSheet('color: rgb(209,116,42)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(200,149,251)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(200,149,251); color: black')
         elif kwargs['value'] == 5:
             self.label_accelerator_status.setText('Shutdown')
             self.label_accelerator_status.setStyleSheet('color: rgb(190,190,190)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(190,190,190)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(190,190,190); color: black')
         elif kwargs['value'] == 6:
             self.label_accelerator_status.setText('Unscheduled ops')
             self.label_accelerator_status.setStyleSheet('color: rgb(19,139,67)')
-            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(0,177,0)')
+            self.label_accelerator_status_indicator.setStyleSheet('background-color: rgb(0,177,0); color: white')
 
 
     def set_i0_gain(self):
@@ -370,6 +428,11 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
 
         #self.RE(bps.abs_set(self.hhm.enc.filter_dt, rate_in_points, wait=True))
 
+    def show_reference_foil_table(self):
+        self.reference_foil_table = PeriodicTableWidget(accessible_elements=self.reference_foil_elements)
+        self.reference_foil_table.element_selected.connect(self.comboBox_reference_foils.setCurrentText)
+        self.reference_foil_table.show()
+
     def set_reference_foil(self):
         foil = self.comboBox_reference_foils.currentText()
         if foil == '--':
@@ -390,9 +453,9 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
         self.label_host.setText(f'Host: {self.hhm_feedback.host}')
         heartbeat = self.hhm.fb_heartbeat.get()
         if heartbeat:
-            self.label_heartbeat.setStyleSheet('background-color: rgb(95,249,95)')
+            self.label_heartbeat.setStyleSheet('background-color: rgb(95,249,95); color: black')
         else:
-            self.label_heartbeat.setStyleSheet('background-color: rgb(0,94,0)')
+            self.label_heartbeat.setStyleSheet('background-color: rgb(0,94,0); color: white')
 
 
 
@@ -401,15 +464,19 @@ class UIInfoBeamline(*uic.loadUiType(ui_path)):
 
 
     def update_slits(self):
-        pass
-        # self.front_end.sync_slits()
-        # self.label_fe_slit_top.setText('{:.2f} mm'.format(self.front_end.slit_top.get()))
-        # self.label_fe_slit_bottom.setText('{:.2f} mm'.format(self.front_end.slit_bottom.get()))
-        # self.label_fe_slit_inboard.setText('{:.2f} mm'.format(self.front_end.slit_inb.get()))
-        # self.label_fe_slit_outboard.setText('{:.2f} mm'.format(self.front_end.slit_outb.get()))
-        #
-        #
-        #
+        if self.front_end is None:
+            return
+        self.front_end.sync_slits()
+        for signal_name, label in (('slit_top', self.label_fe_slit_top),
+                                   ('slit_bottom', self.label_fe_slit_bottom),
+                                   ('slit_inb', self.label_fe_slit_inboard),
+                                   ('slit_outb', self.label_fe_slit_outboard)):
+            try:
+                # short timeouts: this runs on the GUI thread and the FE PVs live on the accelerator network
+                value = getattr(self.front_end, signal_name).get(connection_timeout=1, timeout=1)
+                label.setText(f'{value:.2f} mm')
+            except Exception:
+                label.setText('---')
 
 
 

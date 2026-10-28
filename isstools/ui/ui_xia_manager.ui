@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
@@ -22,7 +22,7 @@
      <height>661</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="layout_plot_mca"/>
+   <layout class="QVBoxLayout" name="layout_plot_mca" />
   </widget>
   <widget class="QPushButton" name="pushButton_reset_plot">
    <property name="geometry">
@@ -52,7 +52,7 @@
      <height>701</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_channels"/>
+   <layout class="QVBoxLayout" name="verticalLayout_channels" />
   </widget>
   <widget class="QTabWidget" name="tab_rois">
    <property name="geometry">
@@ -79,7 +79,7 @@
        <height>791</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout_roi1"/>
+     <layout class="QGridLayout" name="gridLayout_roi1" />
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
@@ -95,7 +95,7 @@
        <height>781</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout_roi2"/>
+     <layout class="QGridLayout" name="gridLayout_roi2" />
     </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
@@ -111,7 +111,7 @@
        <height>781</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout_roi3"/>
+     <layout class="QGridLayout" name="gridLayout_roi3" />
     </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
@@ -127,7 +127,7 @@
        <height>781</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout_roi4"/>
+     <layout class="QGridLayout" name="gridLayout_roi4" />
     </widget>
    </widget>
   </widget>
@@ -365,7 +365,7 @@
       <property name="singleStep">
        <number>1</number>
       </property>
-     </widget>
+     <property name="suffix"><string> eV</string></property></widget>
     </item>
     <item>
      <widget class="QPushButton" name="push_calibrate">
@@ -419,7 +419,7 @@
      <height>111</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="layout_energy_selector"/>
+   <layout class="QVBoxLayout" name="layout_energy_selector" />
   </widget>
   <widget class="QPushButton" name="push_reset_checkboxes">
    <property name="geometry">
@@ -441,6 +441,6 @@
    </property>
   </widget>
  </widget>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

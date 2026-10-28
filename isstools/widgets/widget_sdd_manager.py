@@ -16,7 +16,7 @@ from qtpy.QtCore import QObject
 import numpy
 
 from isstools.dialogs.BasicDialogs import question_message_box, error_message_box, message_box
-from isstools.elements.figure_update import update_figure, setup_figure
+from isstools.elements.figure_update import update_figure, setup_figure, set_axes_labels
 
 # from isstools.widgets import widget_energy_selector
 from isstools.widgets import widget_energy_selector_with_periodic_table
@@ -156,11 +156,11 @@ class UISDDManager(*uic.loadUiType(ui_path)):
                         counts = int(self.get_roi_counts_signal( indx_ch+1, indx_roi+1).get())
                         label_count_object.setText(str(counts))
                         if counts < 400e3:
-                            label_count_object.setStyleSheet("background-color: lime")
+                            label_count_object.setStyleSheet("background-color: lime; color: black")
                         elif 400e3 < counts < 450e3:
-                            label_count_object.setStyleSheet("background-color: yellow")
+                            label_count_object.setStyleSheet("background-color: yellow; color: black")
                         else:
-                            label_count_object.setStyleSheet("background-color: red")
+                            label_count_object.setStyleSheet("background-color: red; color: white")
         except:
             print('Failed to read ROI values')
 
@@ -219,6 +219,7 @@ class UISDDManager(*uic.loadUiType(ui_path)):
         xlims = self.figure_mca.ax.get_xlim()
         ylims = self.figure_mca.ax.get_ylim()
         update_figure([self.figure_mca.ax], self.toolbar_mca, self.canvas_mca)
+        set_axes_labels(self.figure_mca.ax, xlabel='Energy, eV', ylabel='Counts', title='Xspress3 MCA spectra')
         self.roi_bounds = []
         if self.acquired:
             for indx in range(self.num_channels):
@@ -254,8 +255,8 @@ class UISDDManager(*uic.loadUiType(ui_path)):
         self.update_spinboxes()
         self.connect_roi_spinboxes()
 
-        element = self.widget_energy_selector.comboBox_element.currentText()
-        line = self.widget_energy_selector.comboBox_edge.currentText()
+        element = self.widget_energy_selector.element
+        line = self.widget_energy_selector.edge
 
         lineEdit_roi = getattr(self, f'lineEdit_line_label_roi{_roi_index}')
         lineEdit_roi.setText(f'{element} {line}')

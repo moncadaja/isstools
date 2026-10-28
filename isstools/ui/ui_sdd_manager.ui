@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_36">
-    <item row="0" column="0" rowspan="2">
+    <item column="0" row="0" rowspan="2">
      <widget class="QLabel" name="label_141">
       <property name="maximumSize">
        <size>
@@ -36,7 +36,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="2">
+    <item column="1" row="0" rowspan="2">
      <widget class="QSpinBox" name="spinBox_acq_time">
       <property name="maximumSize">
        <size>
@@ -49,7 +49,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2" rowspan="2">
+    <item column="2" row="0" rowspan="2">
      <widget class="QLabel" name="label_acq_time_rbv">
       <property name="maximumSize">
        <size>
@@ -62,7 +62,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3" rowspan="2">
+    <item column="3" row="0" rowspan="2">
      <widget class="QPushButton" name="push_xs3_acquire">
       <property name="enabled">
        <bool>true</bool>
@@ -89,7 +89,7 @@
      <height>701</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="layout_plot_mca"/>
+   <layout class="QVBoxLayout" name="layout_plot_mca" />
   </widget>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
@@ -101,7 +101,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QCheckBox" name="checkBox_ch3_show">
       <property name="maximumSize">
        <size>
@@ -117,7 +117,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item column="1" row="0">
      <widget class="QCheckBox" name="checkBox_ch2_show">
       <property name="maximumSize">
        <size>
@@ -133,7 +133,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
+    <item column="3" row="0">
      <widget class="QCheckBox" name="checkBox_ch4_show">
       <property name="maximumSize">
        <size>
@@ -149,7 +149,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QCheckBox" name="checkBox_ch1_show">
       <property name="maximumSize">
        <size>
@@ -176,7 +176,7 @@
      <height>111</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="layout_energy_selector"/>
+   <layout class="QVBoxLayout" name="layout_energy_selector" />
   </widget>
   <widget class="QWidget" name="gridLayoutWidget_2">
    <property name="geometry">
@@ -188,7 +188,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="9" column="3">
+    <item column="3" row="9">
      <widget class="QLabel" name="label_ch4_roi2_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -206,7 +206,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="5">
+    <item column="5" row="7">
      <widget class="QLabel" name="label_ch2_roi2_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -224,7 +224,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="4">
+    <item column="4" row="11">
      <widget class="QSpinBox" name="spinBox_ch2_roi3_hi">
       <property name="maximumSize">
        <size>
@@ -242,7 +242,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="3">
+    <item column="3" row="6">
      <widget class="QLabel" name="label_ch1_roi2_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -260,7 +260,7 @@
       </property>
      </widget>
     </item>
-    <item row="16" column="6">
+    <item column="6" row="16">
      <widget class="QLabel" name="label_ch3_roi4_roi_counts">
       <property name="maximumSize">
        <size>
@@ -278,7 +278,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="4">
+    <item column="4" row="5">
      <widget class="QSpinBox" name="spinBox_ch4_roi1_hi">
       <property name="maximumSize">
        <size>
@@ -296,7 +296,7 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="6">
+    <item column="6" row="15">
      <widget class="QLabel" name="label_ch2_roi4_roi_counts">
       <property name="maximumSize">
        <size>
@@ -314,7 +314,7 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="6">
+    <item column="6" row="12">
      <widget class="QLabel" name="label_ch3_roi3_roi_counts">
       <property name="maximumSize">
        <size>
@@ -332,7 +332,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="2">
+    <item column="2" row="6">
      <widget class="QSpinBox" name="spinBox_ch1_roi2_lo">
       <property name="maximumSize">
        <size>
@@ -350,7 +350,7 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="5">
+    <item column="5" row="15">
      <widget class="QLabel" name="label_ch2_roi4_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -368,7 +368,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="6">
+    <item column="6" row="2">
      <widget class="QLabel" name="label_ch1_roi1_roi_counts">
       <property name="maximumSize">
        <size>
@@ -386,7 +386,7 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="3">
+    <item column="3" row="15">
      <widget class="QLabel" name="label_ch2_roi4_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -404,7 +404,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="4">
+    <item column="4" row="7">
      <widget class="QSpinBox" name="spinBox_ch2_roi2_hi">
       <property name="maximumSize">
        <size>
@@ -422,7 +422,7 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="5">
+    <item column="5" row="8">
      <widget class="QLabel" name="label_ch3_roi2_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -440,7 +440,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="4">
+    <item column="4" row="4">
      <widget class="QSpinBox" name="spinBox_ch3_roi1_hi">
       <property name="maximumSize">
        <size>
@@ -458,7 +458,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="5">
+    <item column="5" row="3">
      <widget class="QLabel" name="label_ch2_roi1_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -476,7 +476,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="5">
+    <item column="5" row="1">
      <widget class="QLabel" name="label_147">
       <property name="maximumSize">
        <size>
@@ -494,7 +494,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="2">
+    <item column="2" row="14">
      <widget class="QSpinBox" name="spinBox_ch1_roi4_lo">
       <property name="maximumSize">
        <size>
@@ -512,7 +512,7 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="2">
+    <item column="2" row="12">
      <widget class="QSpinBox" name="spinBox_ch3_roi3_lo">
       <property name="maximumSize">
        <size>
@@ -530,7 +530,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="4">
+    <item column="4" row="2">
      <widget class="QSpinBox" name="spinBox_ch1_roi1_hi">
       <property name="maximumSize">
        <size>
@@ -548,7 +548,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="0">
+    <item column="0" row="14">
      <widget class="QCheckBox" name="checkBox_roi4_show">
       <property name="maximumSize">
        <size>
@@ -569,7 +569,7 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="6">
+    <item column="6" row="8">
      <widget class="QLabel" name="label_ch3_roi2_roi_counts">
       <property name="maximumSize">
        <size>
@@ -587,7 +587,7 @@
       </property>
      </widget>
     </item>
-    <item row="17" column="6">
+    <item column="6" row="17">
      <widget class="QLabel" name="label_ch4_roi4_roi_counts">
       <property name="maximumSize">
        <size>
@@ -605,7 +605,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="1">
+    <item column="1" row="10">
      <widget class="QLineEdit" name="lineEdit_line_label_roi3">
       <property name="maximumSize">
        <size>
@@ -623,7 +623,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="6">
+    <item column="6" row="3">
      <widget class="QLabel" name="label_ch2_roi1_roi_counts">
       <property name="maximumSize">
        <size>
@@ -641,7 +641,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="2">
+    <item column="2" row="10">
      <widget class="QSpinBox" name="spinBox_ch1_roi3_lo">
       <property name="maximumSize">
        <size>
@@ -659,7 +659,7 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="4">
+    <item column="4" row="9">
      <widget class="QSpinBox" name="spinBox_ch4_roi2_hi">
       <property name="maximumSize">
        <size>
@@ -677,7 +677,7 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="2">
+    <item column="2" row="8">
      <widget class="QSpinBox" name="spinBox_ch3_roi2_lo">
       <property name="maximumSize">
        <size>
@@ -695,7 +695,7 @@
       </property>
      </widget>
     </item>
-    <item row="13" column="4">
+    <item column="4" row="13">
      <widget class="QSpinBox" name="spinBox_ch4_roi3_hi">
       <property name="maximumSize">
        <size>
@@ -713,7 +713,7 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="6">
+    <item column="6" row="9">
      <widget class="QLabel" name="label_ch4_roi2_roi_counts">
       <property name="maximumSize">
        <size>
@@ -731,7 +731,7 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="2">
+    <item column="2" row="9">
      <widget class="QSpinBox" name="spinBox_ch4_roi2_lo">
       <property name="maximumSize">
        <size>
@@ -749,7 +749,7 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="4">
+    <item column="4" row="12">
      <widget class="QSpinBox" name="spinBox_ch3_roi3_hi">
       <property name="maximumSize">
        <size>
@@ -767,7 +767,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="2">
+    <item column="2" row="11">
      <widget class="QSpinBox" name="spinBox_ch2_roi3_lo">
       <property name="maximumSize">
        <size>
@@ -785,7 +785,7 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="4">
+    <item column="4" row="15">
      <widget class="QSpinBox" name="spinBox_ch2_roi4_hi">
       <property name="maximumSize">
        <size>
@@ -803,7 +803,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="6">
+    <item column="6" row="10">
      <widget class="QLabel" name="label_ch1_roi3_roi_counts">
       <property name="maximumSize">
        <size>
@@ -821,7 +821,7 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="4">
+    <item column="4" row="8">
      <widget class="QSpinBox" name="spinBox_ch3_roi2_hi">
       <property name="maximumSize">
        <size>
@@ -839,7 +839,7 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="3">
+    <item column="3" row="12">
      <widget class="QLabel" name="label_ch3_roi3_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -857,7 +857,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="2">
+    <item column="2" row="3">
      <widget class="QSpinBox" name="spinBox_ch2_roi1_lo">
       <property name="maximumSize">
        <size>
@@ -875,7 +875,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="5">
+    <item column="5" row="5">
      <widget class="QLabel" name="label_ch4_roi1_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -893,7 +893,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="3">
+    <item column="3" row="3">
      <widget class="QLabel" name="label_ch2_roi1_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -911,7 +911,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="5">
+    <item column="5" row="2">
      <widget class="QLabel" name="label_ch1_roi1_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -929,7 +929,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
+    <item column="0" row="6">
      <widget class="QCheckBox" name="checkBox_roi2_show">
       <property name="maximumSize">
        <size>
@@ -950,7 +950,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="6">
+    <item column="6" row="6">
      <widget class="QLabel" name="label_ch1_roi2_roi_counts">
       <property name="maximumSize">
        <size>
@@ -968,7 +968,7 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="3">
+    <item column="3" row="8">
      <widget class="QLabel" name="label_ch3_roi2_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -986,7 +986,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="3">
+    <item column="3" row="10">
      <widget class="QLabel" name="label_ch1_roi3_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1004,7 +1004,7 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="5">
+    <item column="5" row="9">
      <widget class="QLabel" name="label_ch4_roi2_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1022,7 +1022,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
+    <item column="3" row="1">
      <widget class="QLabel" name="label_146">
       <property name="maximumSize">
        <size>
@@ -1040,7 +1040,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="3">
+    <item column="3" row="14">
      <widget class="QLabel" name="label_ch1_roi4_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1058,7 +1058,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="4">
+    <item column="4" row="10">
      <widget class="QSpinBox" name="spinBox_ch1_roi3_hi">
       <property name="maximumSize">
        <size>
@@ -1076,7 +1076,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="4">
+    <item column="4" row="3">
      <widget class="QSpinBox" name="spinBox_ch2_roi1_hi">
       <property name="maximumSize">
        <size>
@@ -1094,7 +1094,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="3">
+    <item column="3" row="11">
      <widget class="QLabel" name="label_ch2_roi3_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1112,7 +1112,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="2">
+    <item column="2" row="5">
      <widget class="QSpinBox" name="spinBox_ch4_roi1_lo">
       <property name="maximumSize">
        <size>
@@ -1130,7 +1130,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
+    <item column="4" row="1">
      <widget class="QLabel" name="label_145">
       <property name="maximumSize">
        <size>
@@ -1148,7 +1148,7 @@
       </property>
      </widget>
     </item>
-    <item row="17" column="3">
+    <item column="3" row="17">
      <widget class="QLabel" name="label_ch4_roi4_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1166,7 +1166,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="5">
+    <item column="5" row="6">
      <widget class="QLabel" name="label_ch1_roi2_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1184,7 +1184,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item column="0" row="2">
      <widget class="QCheckBox" name="checkBox_roi1_show">
       <property name="maximumSize">
        <size>
@@ -1205,7 +1205,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item column="1" row="2">
      <widget class="QLineEdit" name="lineEdit_line_label_roi1">
       <property name="maximumSize">
        <size>
@@ -1223,7 +1223,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="2">
+    <item column="2" row="4">
      <widget class="QSpinBox" name="spinBox_ch3_roi1_lo">
       <property name="maximumSize">
        <size>
@@ -1241,7 +1241,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="5">
+    <item column="5" row="10">
      <widget class="QLabel" name="label_ch1_roi3_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1259,7 +1259,7 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="2">
+    <item column="2" row="15">
      <widget class="QSpinBox" name="spinBox_ch2_roi4_lo">
       <property name="maximumSize">
        <size>
@@ -1277,7 +1277,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="4">
+    <item column="4" row="14">
      <widget class="QSpinBox" name="spinBox_ch1_roi4_hi">
       <property name="maximumSize">
        <size>
@@ -1295,7 +1295,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="6">
+    <item column="6" row="5">
      <widget class="QLabel" name="label_ch4_roi1_roi_counts">
       <property name="maximumSize">
        <size>
@@ -1313,7 +1313,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="4">
+    <item column="4" row="6">
      <widget class="QSpinBox" name="spinBox_ch1_roi2_hi">
       <property name="maximumSize">
        <size>
@@ -1331,7 +1331,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="2">
+    <item column="2" row="7">
      <widget class="QSpinBox" name="spinBox_ch2_roi2_lo">
       <property name="maximumSize">
        <size>
@@ -1349,7 +1349,7 @@
       </property>
      </widget>
     </item>
-    <item row="13" column="2">
+    <item column="2" row="13">
      <widget class="QSpinBox" name="spinBox_ch4_roi3_lo">
       <property name="maximumSize">
        <size>
@@ -1367,7 +1367,7 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item column="1" row="6">
      <widget class="QLineEdit" name="lineEdit_line_label_roi2">
       <property name="maximumSize">
        <size>
@@ -1385,7 +1385,7 @@
       </property>
      </widget>
     </item>
-    <item row="16" column="3">
+    <item column="3" row="16">
      <widget class="QLabel" name="label_ch3_roi4_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1403,7 +1403,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="1">
+    <item column="1" row="14">
      <widget class="QLineEdit" name="lineEdit_line_label_roi4">
       <property name="maximumSize">
        <size>
@@ -1421,7 +1421,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="3">
+    <item column="3" row="5">
      <widget class="QLabel" name="label_ch4_roi1_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1439,7 +1439,7 @@
       </property>
      </widget>
     </item>
-    <item row="17" column="4">
+    <item column="4" row="17">
      <widget class="QSpinBox" name="spinBox_ch4_roi4_hi">
       <property name="maximumSize">
        <size>
@@ -1457,7 +1457,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="3">
+    <item column="3" row="7">
      <widget class="QLabel" name="label_ch2_roi2_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1475,7 +1475,7 @@
       </property>
      </widget>
     </item>
-    <item row="13" column="6">
+    <item column="6" row="13">
      <widget class="QLabel" name="label_ch4_roi3_roi_counts">
       <property name="maximumSize">
        <size>
@@ -1493,7 +1493,7 @@
       </property>
      </widget>
     </item>
-    <item row="16" column="5">
+    <item column="5" row="16">
      <widget class="QLabel" name="label_ch3_roi4_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1511,7 +1511,7 @@
       </property>
      </widget>
     </item>
-    <item row="13" column="3">
+    <item column="3" row="13">
      <widget class="QLabel" name="label_ch4_roi3_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1529,7 +1529,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="5">
+    <item column="5" row="4">
      <widget class="QLabel" name="label_ch3_roi1_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1547,7 +1547,7 @@
       </property>
      </widget>
     </item>
-    <item row="13" column="5">
+    <item column="5" row="13">
      <widget class="QLabel" name="label_ch4_roi3_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1565,7 +1565,7 @@
       </property>
      </widget>
     </item>
-    <item row="17" column="2">
+    <item column="2" row="17">
      <widget class="QSpinBox" name="spinBox_ch4_roi4_lo">
       <property name="maximumSize">
        <size>
@@ -1583,7 +1583,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="3">
+    <item column="3" row="4">
      <widget class="QLabel" name="label_ch3_roi1_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1601,7 +1601,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
+    <item column="2" row="2">
      <widget class="QSpinBox" name="spinBox_ch1_roi1_lo">
       <property name="maximumSize">
        <size>
@@ -1619,7 +1619,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="5">
+    <item column="5" row="11">
      <widget class="QLabel" name="label_ch2_roi3_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1637,7 +1637,7 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="0">
+    <item column="0" row="10">
      <widget class="QCheckBox" name="checkBox_roi3_show">
       <property name="maximumSize">
        <size>
@@ -1658,7 +1658,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="5">
+    <item column="5" row="14">
      <widget class="QLabel" name="label_ch1_roi4_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1676,7 +1676,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="6">
+    <item column="6" row="4">
      <widget class="QLabel" name="label_ch3_roi1_roi_counts">
       <property name="maximumSize">
        <size>
@@ -1694,7 +1694,7 @@
       </property>
      </widget>
     </item>
-    <item row="16" column="2">
+    <item column="2" row="16">
      <widget class="QSpinBox" name="spinBox_ch3_roi4_lo">
       <property name="maximumSize">
        <size>
@@ -1712,7 +1712,7 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="6">
+    <item column="6" row="7">
      <widget class="QLabel" name="label_ch2_roi2_roi_counts">
       <property name="maximumSize">
        <size>
@@ -1730,7 +1730,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="6">
+    <item column="6" row="11">
      <widget class="QLabel" name="label_ch2_roi3_roi_counts">
       <property name="maximumSize">
        <size>
@@ -1748,7 +1748,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item column="2" row="1">
      <widget class="QLabel" name="label_144">
       <property name="maximumSize">
        <size>
@@ -1766,7 +1766,7 @@
       </property>
      </widget>
     </item>
-    <item row="16" column="4">
+    <item column="4" row="16">
      <widget class="QSpinBox" name="spinBox_ch3_roi4_hi">
       <property name="maximumSize">
        <size>
@@ -1784,7 +1784,7 @@
       </property>
      </widget>
     </item>
-    <item row="17" column="5">
+    <item column="5" row="17">
      <widget class="QLabel" name="label_ch4_roi4_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1802,7 +1802,7 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="5">
+    <item column="5" row="12">
      <widget class="QLabel" name="label_ch3_roi3_hi_rbk">
       <property name="maximumSize">
        <size>
@@ -1820,7 +1820,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="6">
+    <item column="6" row="14">
      <widget class="QLabel" name="label_ch1_roi4_roi_counts">
       <property name="maximumSize">
        <size>
@@ -1838,7 +1838,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="3">
+    <item column="3" row="2">
      <widget class="QLabel" name="label_ch1_roi1_lo_rbk">
       <property name="maximumSize">
        <size>
@@ -1856,11 +1856,11 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2" colspan="2">
+    <item colspan="2" column="2" row="0">
      <widget class="QLabel" name="label_149">
       <property name="maximumSize">
        <size>
-        <width>80</width>
+        <width>140</width>
         <height>40</height>
        </size>
       </property>
@@ -1870,15 +1870,15 @@
        </font>
       </property>
       <property name="text">
-       <string>Low limit</string>
+       <string>Low limit, eV</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="4" colspan="2">
+    <item colspan="2" column="4" row="0">
      <widget class="QLabel" name="label_150">
       <property name="maximumSize">
        <size>
-        <width>80</width>
+        <width>140</width>
         <height>20</height>
        </size>
       </property>
@@ -1888,11 +1888,11 @@
        </font>
       </property>
       <property name="text">
-       <string>High limit</string>
+       <string>High limit, eV</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="6">
+    <item column="6" row="1">
      <widget class="QLabel" name="label_148">
       <property name="maximumSize">
        <size>
@@ -1922,7 +1922,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="3">
+    <item column="3" row="0">
      <widget class="QLabel" name="label_2">
       <property name="maximumSize">
        <size>
@@ -1935,7 +1935,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item column="1" row="0">
      <widget class="QLabel" name="label">
       <property name="maximumSize">
        <size>
@@ -1948,7 +1948,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QDoubleSpinBox" name="doubleSpinBox_energy_window">
       <property name="enabled">
        <bool>false</bool>
@@ -1970,7 +1970,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
+    <item column="2" row="2">
      <widget class="QPushButton" name="pushButton_set_roi_hilo">
       <property name="maximumSize">
        <size>
@@ -1983,7 +1983,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item column="2" row="1">
      <widget class="QComboBox" name="comboBox_roi_index">
       <property name="maximumSize">
        <size>
@@ -1993,7 +1993,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item column="4" row="0">
      <widget class="QCheckBox" name="checkBox_roi_window_auto">
       <property name="maximumSize">
        <size>
@@ -2031,6 +2031,6 @@
    </property>
   </widget>
  </widget>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

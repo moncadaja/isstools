@@ -63,9 +63,9 @@ class UIInfoShutters(*uic.loadUiType(ui_path)):
                 button.clicked.connect(toggle_shutter_call(item[1]))
 
                 if item[1].state.value == 0:
-                    button.setStyleSheet("background-color: lime")
+                    button.setStyleSheet("background-color: lime; color: black")
                 else:
-                    button.setStyleSheet("background-color: red")
+                    button.setStyleSheet("background-color: red; color: white")
 
             elif hasattr(item[1], 'subscribe'):
                 item[1].output.parent.button = button
@@ -81,9 +81,9 @@ class UIInfoShutters(*uic.loadUiType(ui_path)):
                     return toggle_shutter
 
                 if item[1].state == 'closed':
-                    button.setStyleSheet("background-color: red")
+                    button.setStyleSheet("background-color: red; color: white")
                 elif item[1].state == 'open':
-                    button.setStyleSheet("background-color: lime")
+                    button.setStyleSheet("background-color: lime; color: black")
 
                 button.clicked.connect(toggle_shutter_call(item[1]))
 
@@ -103,7 +103,8 @@ class UIInfoShutters(*uic.loadUiType(ui_path)):
                 self.shutters_sig.emit()
 
     def change_shutter_color(self):
-        self.current_button.setStyleSheet("background-color: " + self.current_button_color)
+        text_color = "black" if self.current_button_color == "lime" else "white"
+        self.current_button.setStyleSheet(f"background-color: {self.current_button_color}; color: {text_color}")
 
     def check_beamline_readiness(self, state):
         # self.plan_processor.check_valves = state

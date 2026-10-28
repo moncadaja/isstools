@@ -1,12 +1,18 @@
 from bluesky.callbacks import LivePlot
 import numpy as np
 
+from isstools.elements.figure_update import apply_axes_labels
+
 class NormPlot(LivePlot):
     def __init__(self, num_name, den_name, result_name, motor, *args, **kwargs):
         super().__init__(result_name, x=motor, *args, **kwargs)
         self.num_name = num_name
         self.den_name = den_name
         self.result_name = result_name
+
+    def start(self, doc):
+        super().start(doc)
+        apply_axes_labels(self.ax)  # LivePlot labels the axes with raw keys; restore the unit-bearing labels
         # self.start_figure_func = start_figure_func
         # self.stop_figure_func = stop_figure_func
         # self.start_figure_func()
@@ -46,6 +52,10 @@ class XASPlot(LivePlot):
         self.norm_name = norm_name
         self.log = log
         self.norm_name = norm_name
+
+    def start(self, doc):
+        super().start(doc)
+        apply_axes_labels(self.ax)
 
     def descriptor(self, doc):
         if self.num_name.startswith('apb'):

@@ -1,7 +1,7 @@
 import os
 from subprocess import call
 
-from isstools.widgets import widget_energy_selector
+from isstools.widgets import widget_energy_selector_with_periodic_table
 
 
 import numpy as np
@@ -12,15 +12,15 @@ from qtpy.QtWidgets import QMenu
 
 from isstools.conversions import xray
 from isstools.dialogs import UpdateAngleOffset
-from isstools.elements.figure_update import update_figure
+from isstools.elements.figure_update import update_figure, set_axes_labels
 from xas.trajectory import TrajectoryCreator
 from isstools.elements.figure_update import setup_figure
 from ophyd import utils as ophyd_utils
 from xas.bin import xas_energy_grid
 from xas.xray import e2k, k2e
+from xas.fly_timing import suggest_durations, realized_time_per_bin
 from isstools.dialogs.BasicDialogs import question_message_box, message_box
 from ..elements.elements import remove_special_characters
-from isstools.widgets import widget_emission_energy_selector
 
 ui_path = str(importlib.resources.files('isstools') / 'ui/ui_scan_manager.ui')
 
@@ -46,10 +46,12 @@ class UIScanManager(*uic.loadUiType(ui_path)):
         self.scan_manager = scan_manager
         self.johann_spectrometer_manager = johann_spectrometer_manager
         self.detector_dict = detector_dict
-        self.widget_energy_selector = widget_energy_selector.UIEnergySelector()
+        self.widget_energy_selector = widget_energy_selector_with_periodic_table.UIEnergySelectorWithPeriodicTable(emission=False)
         self.layout_energy_selector.addWidget(self.widget_energy_selector)
 
-        self.widget_emission_energy = widget_emission_energy_selector.UIEmissionEnergySelectorEnergyOnly(parent=self)
+        self.widget_emission_energy = widget_energy_selector_with_periodic_table.UIEmissionLineSelectorWithPeriodicTable(
+            line_table=widget_energy_selector_with_periodic_table.emission_lines_from_xraydb(),
+            settings=self.parent.settings)
         self.layout_emission_energy_selector.addWidget(self.widget_emission_energy)
 
         self.push_update_offset.clicked.connect(self.update_offset)
@@ -63,8 +65,14 @@ class UIScanManager(*uic.loadUiType(ui_path)):
 
         self.figure_trajectory, self.canvas_trajectory, self.toolbar_trajectory  = \
             setup_figure(self, self.layout_trajectory)
+        gridspec = self.figure_trajectory.add_gridspec(2, 1, height_ratios=[2, 1], hspace=0.45)
+        self.figure_trajectory.ax.set_subplotspec(gridspec[0])
         self.figure_trajectory.ax1 = self.figure_trajectory.ax
         self.figure_trajectory.ax2 = self.figure_trajectory.ax.twinx()
+        self.figure_trajectory.ax_bins = self.figure_trajectory.add_subplot(gridspec[1])
+        self.push_suggest_durations_exafs.clicked.connect(lambda: self.suggest_fly_durations('EXAFS'))
+        self.push_suggest_durations_xanes.clicked.connect(lambda: self.suggest_fly_durations('XANES'))
+        self.push_suggest_durations_herfd.clicked.connect(lambda: self.suggest_fly_durations('HERFD'))
         self.update_local_manager_list()
 
         self.update_exafs_end_values()
@@ -362,9 +370,9 @@ class UIScanManager(*uic.loadUiType(ui_path)):
             if (scan_type == 'step scan') and self.groupBox_step_linear_scan.isChecked():
                 scan_parameters = self._linear_step_dict
             else:
-                scan_parameters_common = {'element': self.widget_energy_selector.comboBox_element.currentText(),
-                                          'edge': self.widget_energy_selector.comboBox_edge.currentText(),
-                                          'e0': float(self.widget_energy_selector.edit_E0.text()),
+                scan_parameters_common = {'element': self.widget_energy_selector.element,
+                                          'edge': self.widget_energy_selector.edge,
+                                          'e0': self.widget_energy_selector.e0,
                                           'preedge_start': float(self.edit_preedge_start.text()),
                                           'XANES_start': float(self.edit_xanes_start.text()),
                                           'XANES_end': float(self.edit_xanes_end.text()),
@@ -432,9 +440,9 @@ class UIScanManager(*uic.loadUiType(ui_path)):
             if scan_type == 'constant energy':
                 scan_parameters = {'energy' : self.doubleSpinBox_spectrometer_energy.value()}
             else:
-                scan_parameters_common = {'element': self.widget_emission_energy.comboBox_element.currentText(),
-                                          'line': self.widget_emission_energy.comboBox_line.currentText(),
-                                          'e0': float(self.widget_emission_energy.edit_E.text()),
+                scan_parameters_common = {'element': self.widget_emission_energy.element,
+                                          'line': self.widget_emission_energy.line,
+                                          'e0': self.widget_emission_energy.energy,
                                           'preline_start': float(self.edit_preline_start.text()),
                                           'mainline_start': float(self.edit_line_start.text()),
                                           'mainline_end': float(self.edit_line_end.text()),
@@ -482,8 +490,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
                                               self.aux_parameters,
                                               self.plot_trajectory_func)
         if not keep_scan_name:
-            signature  = f'{self.widget_energy_selector.comboBox_element.currentText()}-' \
-                         f'{self.widget_energy_selector.comboBox_edge.currentText()}'
+            signature = f'{self.widget_energy_selector.element}-{self.widget_energy_selector.edge}'
             print(signature)
             self.lineEdit_scan_name.setText(signature)
 
@@ -502,17 +509,57 @@ class UIScanManager(*uic.loadUiType(ui_path)):
 
     def plot_trajectory_func(self, x, y):
 
-        update_figure([self.figure_trajectory.ax1,self.figure_trajectory.ax2 ],
+        update_figure([self.figure_trajectory.ax1, self.figure_trajectory.ax2, self.figure_trajectory.ax_bins],
                           self.toolbar_trajectory,
                           self.canvas_trajectory)
         self.figure_trajectory.ax1.plot(x, y)
-        self.figure_trajectory.ax1.set_xlabel('Time, s')
-        self.figure_trajectory.ax1.set_ylabel('Energy, eV')
+        set_axes_labels(self.figure_trajectory.ax1, xlabel='Time, s', ylabel='Energy, eV', title='Trajectory preview')
         self.figure_trajectory.ax2.plot(x[:-1], np.diff(y) / np.diff(x), 'r--')
-        self.figure_trajectory.ax2.set_ylabel('Velocity (eV/s)')
+        set_axes_labels(self.figure_trajectory.ax2, ylabel='Velocity, eV/s')
         self.figure_trajectory.ax1.set_xlim(x.min(), x.max())
         self.figure_trajectory.ax2.set_xlim(x.min(), x.max())
+        try:
+            centers, seconds = realized_time_per_bin(x, y, self.widget_energy_selector.e0)
+            self.figure_trajectory.ax_bins.step(centers, seconds, where='mid')
+            set_axes_labels(self.figure_trajectory.ax_bins, xlabel='Energy, eV', ylabel='Time per bin, s',
+                            title='Acquisition time per processing bin')
+        except Exception as e:
+            print(f'[Scan Manager] could not compute time per bin: {e}')
         self.canvas_trajectory.draw_idle()
+
+    def _fly_scan_bounds(self):
+        if self.radioButton_exafs_end_k.isChecked():
+            exafs_end_k = float(self.edit_exafs_end_k.text())
+        else:
+            exafs_end_k = e2k(float(self.edit_exafs_end_eV.text()), 0)
+        return (self.widget_energy_selector.e0, float(self.edit_preedge_start.text()), float(self.edit_xanes_start.text()),
+                float(self.edit_xanes_end.text()), exafs_end_k)
+
+    def _pilatus_count_rate(self):
+        """Counts per second in the primary Pilatus ROI from the last image, or None."""
+        try:
+            pilatus = self.detector_dict['Pilatus 100k']['device']
+            return float(pilatus.stats1.total.get()) / float(pilatus.cam.acquire_time.get())
+        except Exception:
+            return None
+
+    def suggest_fly_durations(self, mode):
+        try:
+            e0, preedge_start, xanes_start, xanes_end, exafs_end_k = self._fly_scan_bounds()
+        except ValueError:
+            message_box('Fly scan durations', 'Energy range fields must be numbers')
+            return
+        count_rate = self._pilatus_count_rate() if mode == 'HERFD' else None
+        result = suggest_durations(mode, e0, preedge_start, xanes_start, xanes_end, exafs_end_k, count_rate=count_rate)
+        durations, bins, tau = result['durations'], result['bins'], result['time_per_bin_s']
+        self.radioButton_flypath_standard.setChecked(True)
+        self.edit_ds2_pree_duration.setText(f"{durations['preedge']:g}")
+        self.edit_ds2_edge_duration.setText(f"{durations['xanes']:g}")
+        self.edit_ds2_poste_duration.setText(f"{durations['postedge']:g}")
+        print(f"[Scan Manager] {mode} durations for E0 {e0:.0f} eV, {preedge_start:g}/{xanes_start:g}/{xanes_end:g} eV, {exafs_end_k:g} 1/A: "
+              f"pre {durations['preedge']:g} s ({bins['preedge']} bins x {tau['preedge']:.3f} s), "
+              f"XANES {durations['xanes']:g} s ({bins['xanes']} bins x {tau['xanes']:.3f} s), "
+              f"post {durations['postedge']:g} s ({bins['postedge']} bins x {tau['postedge']:.3f} s); {result['source']}")
 
     def update_local_manager_list(self):
         self.listWidget_local_manager.clear()
@@ -546,7 +593,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
             scan_info = f" {local_scan['scan_def']} \n UID: {uid} \n\n Scan parameters \n {params}"
             message_box('Scan information', scan_info)
 
-    def populate_fields_with_scan_parameters(self):
+    def populate_fields_with_scan_parameters(self, apply_offset=False):
         selection = self.listWidget_local_manager.selectedIndexes()
         if selection != []:
             local_scan = self.scan_manager.scan_list_local[selection[0].row()]
@@ -556,6 +603,10 @@ class UIScanManager(*uic.loadUiType(ui_path)):
             scan_parameters = global_scan['scan_parameters']
             aux_parameters = local_scan['aux_parameters']
 
+            if apply_offset and 'offset' in aux_parameters:
+                self.hhm.set_new_angle_offset(aux_parameters['offset'],
+                                              error_message_func=lambda msg: message_box('Angular offset', msg))
+
             if global_scan['scan_type'] == 'constant energy':
                 self.tabWidget_mono_scan.setCurrentIndex(1)
                 self.tabWidget_mono_scan.tabBarClicked.emit(1)
@@ -563,30 +614,13 @@ class UIScanManager(*uic.loadUiType(ui_path)):
             else:
                 self.tabWidget_mono_scan.setCurrentIndex(0)
                 self.tabWidget_mono_scan.tabBarClicked.emit(0)
-                for i in range(self.widget_energy_selector.comboBox_element.count()):
-                    if self.widget_energy_selector.comboBox_element.itemText(i) == scan_parameters['element']:
-                        self.widget_energy_selector.comboBox_element.setCurrentIndex(i)
-                for i in range(self.widget_energy_selector.comboBox_edge.count()):
-                    if self.widget_energy_selector.comboBox_edge.itemText(i) == scan_parameters['edge']:
-                        self.widget_energy_selector.comboBox_edge.setCurrentIndex(i)
-                self.widget_energy_selector.edit_E0.setText(str(int(scan_parameters['e0'])))
+                self.widget_energy_selector.set_values(scan_parameters['element'],
+                                                       scan_parameters['edge'],
+                                                       scan_parameters['e0'])
                 self.edit_preedge_start.setText(str(int(scan_parameters['preedge_start'])))
                 self.edit_xanes_start.setText(str(int(scan_parameters['XANES_start'])))
                 self.edit_xanes_end.setText(str(int(scan_parameters['XANES_end'])))
                 self.edit_exafs_end_k.setText(str(int(scan_parameters['EXAFS_end'])))
-
-            for i in range(self.widget_energy_selector.comboBox_element.count()):
-                if self.widget_energy_selector.comboBox_element.itemText(i) == scan_parameters['element']:
-                    self.widget_energy_selector.comboBox_element.setCurrentIndex(i)
-            for i in range(self.widget_energy_selector.comboBox_edge.count()):
-                if self.widget_energy_selector.comboBox_edge.itemText(i) == scan_parameters['edge']:
-                    self.widget_energy_selector.comboBox_edge.setCurrentIndex(i)
-            self.widget_energy_selector.edit_E0.setText(str(int(scan_parameters['e0'])))
-
-            self.edit_preedge_start.setText(str(int(scan_parameters['preedge_start'])))
-            self.edit_xanes_start.setText(str(int(scan_parameters['XANES_start'])))
-            self.edit_xanes_end.setText(str(int(scan_parameters['XANES_end'])))
-            self.edit_exafs_end_k.setText(str(int(scan_parameters['EXAFS_end'])))
 
             if global_scan['scan_type'] == 'fly scan':
                 self.tabWidget_mono_scan_type.setCurrentIndex(0)
@@ -648,13 +682,9 @@ class UIScanManager(*uic.loadUiType(ui_path)):
                     else:
                         self.tabWidget_spectrometer_scan.setCurrentIndex(0)
                         self.tabWidget_spectrometer_scan.tabBarClicked.emit(1)
-                        for i in range(self.widget_emission_energy.comboBox_element.count()):
-                            if self.widget_emission_energy.comboBox_element.itemText(i) == spectrometer_scan_parameters['element']:
-                                self.widget_emission_energy.comboBox_element.setCurrentIndex(i)
-                        for i in range(self.widget_emission_energy.comboBox_line.count()):
-                            if self.widget_emission_energy.comboBox_line.itemText(i) == spectrometer_scan_parameters['line']:
-                                self.widget_emission_energy.comboBox_line.setCurrentIndex(i)
-                        self.widget_emission_energy.edit_E.setText(str(int(spectrometer_scan_parameters['e0'])))
+                        self.widget_emission_energy.set_values(spectrometer_scan_parameters['element'],
+                                                               spectrometer_scan_parameters['line'],
+                                                               spectrometer_scan_parameters['e0'])
                         self.edit_preline_start.setText(str(spectrometer_scan_parameters['preline_start']))
                         self.edit_line_start.setText(str(spectrometer_scan_parameters['mainline_start']))
                         self.edit_line_end.setText(str(spectrometer_scan_parameters['mainline_end']))
@@ -693,7 +723,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
 
     def update_offset(self):
         offset = float(self.label_angle_offset.text())
-        energy = float(self.widget_energy_selector.edit_E0.text())
+        energy = self.widget_energy_selector.e0
         dlg = UpdateAngleOffset.UpdateAngleOffset(offset, energy, parent=self)
         if dlg.exec():
             try:
@@ -727,6 +757,7 @@ class UIScanManager(*uic.loadUiType(ui_path)):
         menu = QMenu()
         change_offset = menu.addAction("&Update scan angular offset to current")
         populate_fields = menu.addAction("&Populate fields with scan parameters")
+        populate_fields_and_offset = menu.addAction("Populate fields and &offset with scan parameters")
         parentPosition = self.listWidget_local_manager.mapToGlobal(QtCore.QPoint(0, 0))
         menu.move(parentPosition + QPos)
         action = menu.exec()
@@ -734,6 +765,8 @@ class UIScanManager(*uic.loadUiType(ui_path)):
             self.change_offset_for_local_scan()
         elif action == populate_fields:
             self.populate_fields_with_scan_parameters()
+        elif action == populate_fields_and_offset:
+            self.populate_fields_with_scan_parameters(apply_offset=True)
 
     def change_offset_for_local_scan(self):
         # print('dont worry - nothing happens')

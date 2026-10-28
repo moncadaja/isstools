@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Xlive</class>
  <widget class="QMainWindow" name="Xlive">
@@ -39,9 +39,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>170</y>
+      <y>192</y>
       <width>1641</width>
-      <height>961</height>
+      <height>939</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -220,7 +220,7 @@
         <height>921</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="layout_batch"/>
+      <layout class="QHBoxLayout" name="layout_batch" />
      </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
@@ -245,7 +245,7 @@
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Sample registry</string>
+      <string>Crystal Finder</string>
      </attribute>
      <widget class="QWidget" name="verticalLayoutWidget_2">
       <property name="geometry">
@@ -256,7 +256,7 @@
         <height>781</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="layout_sample_registry">
+      <layout class="QVBoxLayout" name="layout_crystal_finder">
        <property name="sizeConstraint">
         <enum>QLayout::SetNoConstraint</enum>
        </property>
@@ -338,7 +338,7 @@
       <x>10</x>
       <y>10</y>
       <width>341</width>
-      <height>151</height>
+      <height>173</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="layout_info_general">
@@ -353,10 +353,10 @@
       <x>1820</x>
       <y>10</y>
       <width>381</width>
-      <height>151</height>
+      <height>173</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="layout_info_shutters"/>
+    <layout class="QHBoxLayout" name="layout_info_shutters" />
    </widget>
    <widget class="QWidget" name="horizontalLayoutWidget_11">
     <property name="geometry">
@@ -364,7 +364,7 @@
       <x>360</x>
       <y>10</y>
       <width>1451</width>
-      <height>151</height>
+      <height>173</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="layout_info_beamline">
@@ -431,7 +431,7 @@
         </font>
        </property>
        <property name="text">
-        <string/>
+        <string />
        </property>
       </widget>
      </item>
@@ -462,7 +462,7 @@
         </font>
        </property>
        <property name="text">
-        <string/>
+        <string />
        </property>
       </widget>
      </item>
@@ -479,7 +479,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar" />
   <action name="actionSelct_new_trajectory">
    <property name="text">
     <string>Select new trajectory...</string>
@@ -489,6 +489,6 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
  </tabstops>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

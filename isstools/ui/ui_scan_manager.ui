@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
@@ -51,7 +51,7 @@
      <height>491</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="layout_trajectory"/>
+   <layout class="QVBoxLayout" name="layout_trajectory" />
   </widget>
   <widget class="QPushButton" name="push_add_to_manager">
    <property name="geometry">
@@ -125,7 +125,7 @@ Scan Manager</string>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QLabel" name="label_93">
       <property name="minimumSize">
        <size>
@@ -144,7 +144,7 @@ Scan Manager</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item column="1" row="0">
      <widget class="QLabel" name="label_angle_offset">
       <property name="maximumSize">
        <size>
@@ -157,7 +157,7 @@ Scan Manager</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QLabel" name="label_94">
       <property name="maximumSize">
        <size>
@@ -170,7 +170,7 @@ Scan Manager</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="3">
+    <item colspan="3" column="0" row="1">
      <widget class="QPushButton" name="push_update_offset">
       <property name="maximumSize">
        <size>
@@ -225,7 +225,7 @@ Scan Manager</string>
         <height>111</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="layout_energy_selector"/>
+      <layout class="QHBoxLayout" name="layout_energy_selector" />
      </widget>
      <widget class="QGroupBox" name="groupBox_xas_edge_parameters">
       <property name="geometry">
@@ -249,7 +249,7 @@ Scan Manager</string>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
-        <item row="2" column="0">
+        <item column="0" row="2">
          <widget class="QLabel" name="label_29">
           <property name="maximumSize">
            <size>
@@ -269,7 +269,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item column="1" row="4">
          <widget class="QLineEdit" name="edit_exafs_end_eV">
           <property name="maximumSize">
            <size>
@@ -282,7 +282,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0" rowspan="2">
+        <item column="0" row="3" rowspan="2">
          <widget class="QLabel" name="label_28">
           <property name="maximumSize">
            <size>
@@ -302,7 +302,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="2">
+        <item column="2" row="4">
          <widget class="QRadioButton" name="radioButton_exafs_end_eV">
           <property name="maximumSize">
            <size>
@@ -315,7 +315,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
+        <item column="2" row="0">
          <widget class="QLabel" name="label_26">
           <property name="maximumSize">
            <size>
@@ -328,7 +328,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
+        <item column="2" row="2">
          <widget class="QLabel" name="label_30">
           <property name="maximumSize">
            <size>
@@ -341,7 +341,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
+        <item column="2" row="3">
          <widget class="QRadioButton" name="radioButton_exafs_end_k">
           <property name="maximumSize">
            <size>
@@ -350,14 +350,14 @@ Scan Manager</string>
            </size>
           </property>
           <property name="text">
-           <string>k</string>
+           <string>k, Å⁻¹</string>
           </property>
           <property name="checked">
            <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
+        <item column="2" row="1">
          <widget class="QLabel" name="label_32">
           <property name="maximumSize">
            <size>
@@ -370,7 +370,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item column="1" row="3">
          <widget class="QLineEdit" name="edit_exafs_end_k">
           <property name="maximumSize">
            <size>
@@ -383,7 +383,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item column="1" row="1">
          <widget class="QLineEdit" name="edit_xanes_start">
           <property name="maximumSize">
            <size>
@@ -396,7 +396,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item column="0" row="1">
          <widget class="QLabel" name="label_22">
           <property name="maximumSize">
            <size>
@@ -416,7 +416,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
+        <item column="1" row="0">
          <widget class="QLineEdit" name="edit_preedge_start">
           <property name="maximumSize">
            <size>
@@ -429,7 +429,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
+        <item column="0" row="0">
          <widget class="QLabel" name="label_27">
           <property name="maximumSize">
            <size>
@@ -449,7 +449,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item column="1" row="2">
          <widget class="QLineEdit" name="edit_xanes_end">
           <property name="maximumSize">
            <size>
@@ -480,14 +480,14 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_105">
          <property name="text">
           <string>Energy</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item column="1" row="0">
         <widget class="QDoubleSpinBox" name="doubleSpinBox_mono_energy">
          <property name="minimum">
           <double>1000.000000000000000</double>
@@ -500,7 +500,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item column="2" row="0">
         <widget class="QLabel" name="label_84">
          <property name="text">
           <string>eV</string>
@@ -540,7 +540,7 @@ Scan Manager</string>
        <property name="sizeConstraint">
         <enum>QLayout::SetMaximumSize</enum>
        </property>
-       <item row="0" column="4">
+       <item column="4" row="0">
         <widget class="QLabel" name="label_95">
          <property name="maximumSize">
           <size>
@@ -549,11 +549,11 @@ Scan Manager</string>
           </size>
          </property>
          <property name="text">
-          <string>Preedge flex</string>
+          <string>Preedge flex, fraction 0-1</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
+       <item column="3" row="0">
         <widget class="QLabel" name="label_133">
          <property name="maximumSize">
           <size>
@@ -566,7 +566,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item column="2" row="2">
         <widget class="QLineEdit" name="edit_ds2_poste_duration">
          <property name="maximumSize">
           <size>
@@ -579,7 +579,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="5">
+       <item column="5" row="1">
         <widget class="QLineEdit" name="edit_postedge_flex_frac">
          <property name="maximumSize">
           <size>
@@ -592,7 +592,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item column="2" row="1">
         <widget class="QLineEdit" name="edit_ds2_edge_duration">
          <property name="maximumSize">
           <size>
@@ -605,7 +605,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item column="0" row="5">
         <widget class="QRadioButton" name="radioButton_flypath_sine">
          <property name="maximumSize">
           <size>
@@ -618,7 +618,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item column="0" row="3">
         <widget class="QRadioButton" name="radioButton_flypath_doublesine">
          <property name="maximumSize">
           <size>
@@ -631,7 +631,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item column="1" row="2">
         <widget class="QLabel" name="label_136">
          <property name="maximumSize">
           <size>
@@ -644,7 +644,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
+       <item column="4" row="1">
         <widget class="QLabel" name="label_141">
          <property name="maximumSize">
           <size>
@@ -653,11 +653,11 @@ Scan Manager</string>
           </size>
          </property>
          <property name="text">
-          <string>Postedge flex</string>
+          <string>Postedge flex, fraction 0-1</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item column="1" row="0">
         <widget class="QLabel" name="label_92">
          <property name="maximumSize">
           <size>
@@ -670,7 +670,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item column="1" row="4">
         <widget class="QLabel" name="label_90">
          <property name="maximumSize">
           <size>
@@ -683,7 +683,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item column="1" row="5">
         <widget class="QLabel" name="label_86">
          <property name="maximumSize">
           <size>
@@ -696,7 +696,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="3">
+       <item column="3" row="5">
         <widget class="QLabel" name="label_87">
          <property name="maximumSize">
           <size>
@@ -709,7 +709,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="3">
+       <item column="3" row="4">
         <widget class="QLabel" name="label_91">
          <property name="maximumSize">
           <size>
@@ -722,7 +722,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item column="1" row="3">
         <widget class="QLabel" name="label_88">
          <property name="maximumSize">
           <size>
@@ -735,7 +735,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item column="1" row="1">
         <widget class="QLabel" name="label_134">
          <property name="maximumSize">
           <size>
@@ -748,7 +748,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
+       <item column="2" row="5">
         <widget class="QLineEdit" name="edit_sine_total_duration">
          <property name="maximumSize">
           <size>
@@ -761,7 +761,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
+       <item column="2" row="4">
         <widget class="QLineEdit" name="edit_ds_poste_duration">
          <property name="maximumSize">
           <size>
@@ -774,7 +774,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
+       <item column="3" row="1">
         <widget class="QLabel" name="label_135">
          <property name="maximumSize">
           <size>
@@ -787,7 +787,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
+       <item column="3" row="3">
         <widget class="QLabel" name="label_89">
          <property name="maximumSize">
           <size>
@@ -800,7 +800,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QRadioButton" name="radioButton_flypath_standard">
          <property name="maximumSize">
           <size>
@@ -816,7 +816,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item column="2" row="0">
         <widget class="QLineEdit" name="edit_ds2_pree_duration">
          <property name="maximumSize">
           <size>
@@ -829,7 +829,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="3">
+       <item column="3" row="2">
         <widget class="QLabel" name="label_137">
          <property name="maximumSize">
           <size>
@@ -842,7 +842,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="5">
+       <item column="5" row="0">
         <widget class="QLineEdit" name="edit_preedge_flex_frac">
          <property name="maximumSize">
           <size>
@@ -855,7 +855,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item column="2" row="3">
         <widget class="QLineEdit" name="edit_ds_pree_duration">
          <property name="maximumSize">
           <size>
@@ -868,7 +868,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-      </layout>
+      <item colspan="2" column="4" row="3"><widget class="QPushButton" name="push_suggest_durations_exafs"><property name="text"><string>Suggest EXAFS durations</string></property><property name="toolTip"><string>Fill the three durations from the processing-bin count of each region and the EXAFS time-per-bin policy (xas/fly_timing.json)</string></property></widget></item><item colspan="2" column="4" row="4"><widget class="QPushButton" name="push_suggest_durations_xanes"><property name="text"><string>Suggest XANES durations</string></property><property name="toolTip"><string>Same, with the XANES policy (more time per bin across the edge)</string></property></widget></item><item colspan="2" column="4" row="5"><widget class="QPushButton" name="push_suggest_durations_herfd"><property name="text"><string>Suggest HERFD durations</string></property><property name="toolTip"><string>Time per bin = target counts / live Pilatus ROI count rate (falls back to a multiple of the EXAFS policy)</string></property></widget></item></layout>
      </widget>
      <widget class="QWidget" name="gridLayoutWidget_6">
       <property name="geometry">
@@ -880,21 +880,21 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_23">
          <property name="text">
           <string>Pad</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item column="1" row="0">
         <widget class="QLineEdit" name="edit_pad_time">
          <property name="text">
           <string>0.5</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item column="2" row="0">
         <widget class="QLabel" name="label_24">
          <property name="text">
           <string>s</string>
@@ -913,7 +913,7 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_14">
-       <item row="1" column="1">
+       <item column="1" row="1">
         <widget class="QSpinBox" name="spinBox_tiling_repetitions">
          <property name="enabled">
           <bool>true</bool>
@@ -941,7 +941,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item column="0" row="1">
         <widget class="QLabel" name="label_63">
          <property name="maximumSize">
           <size>
@@ -950,11 +950,11 @@ Scan Manager</string>
           </size>
          </property>
          <property name="text">
-          <string>Repeat</string>
+          <string>Repeat, times</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item column="0" row="2">
         <widget class="QCheckBox" name="checkBox_traj_single_dir">
          <property name="maximumSize">
           <size>
@@ -973,7 +973,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item column="0" row="3">
         <widget class="QCheckBox" name="checkBox_traj_revert">
          <property name="enabled">
           <bool>true</bool>
@@ -995,7 +995,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_62">
          <property name="maximumSize">
           <size>
@@ -1082,7 +1082,7 @@ Scan Manager</string>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_7">
-        <item row="0" column="1">
+        <item column="1" row="0">
          <widget class="QLineEdit" name="edit_linear_scan_start">
           <property name="maximumSize">
            <size>
@@ -1095,7 +1095,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item column="0" row="1">
          <widget class="QLabel" name="label_33">
           <property name="maximumSize">
            <size>
@@ -1114,7 +1114,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item column="1" row="1">
          <widget class="QLineEdit" name="edit_linear_scan_end">
           <property name="maximumSize">
            <size>
@@ -1127,7 +1127,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item column="1" row="2">
          <widget class="QLineEdit" name="edit_linear_scan_spacing">
           <property name="maximumSize">
            <size>
@@ -1140,7 +1140,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
+        <item column="0" row="0">
          <widget class="QLabel" name="label_25">
           <property name="maximumSize">
            <size>
@@ -1159,7 +1159,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="2">
+        <item column="2" row="0">
          <widget class="QLabel" name="label_31">
           <property name="maximumSize">
            <size>
@@ -1172,7 +1172,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item column="0" row="2">
          <widget class="QLabel" name="label_42">
           <property name="maximumSize">
            <size>
@@ -1191,7 +1191,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
+        <item column="2" row="1">
          <widget class="QLabel" name="label_44">
           <property name="maximumSize">
            <size>
@@ -1204,7 +1204,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item column="0" row="3">
          <widget class="QLabel" name="label_43">
           <property name="maximumSize">
            <size>
@@ -1223,7 +1223,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item column="1" row="3">
          <widget class="QLineEdit" name="edit_linear_scan_dwell">
           <property name="maximumSize">
            <size>
@@ -1236,7 +1236,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
+        <item column="2" row="3">
          <widget class="QLabel" name="label_46">
           <property name="maximumSize">
            <size>
@@ -1249,7 +1249,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
+        <item column="2" row="2">
          <widget class="QLabel" name="label_45">
           <property name="maximumSize">
            <size>
@@ -1290,7 +1290,7 @@ Scan Manager</string>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_18">
-        <item row="0" column="0">
+        <item column="0" row="0">
          <widget class="QLabel" name="label_100">
           <property name="maximumSize">
            <size>
@@ -1309,7 +1309,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
+        <item column="1" row="3">
          <widget class="QLineEdit" name="edit_exafs_dwell">
           <property name="maximumSize">
            <size>
@@ -1322,7 +1322,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item column="0" row="1">
          <widget class="QLabel" name="label_80">
           <property name="maximumSize">
            <size>
@@ -1341,7 +1341,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
+        <item column="2" row="3">
          <widget class="QLabel" name="label_98">
           <property name="maximumSize">
            <size>
@@ -1354,7 +1354,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item column="1" row="2">
          <widget class="QLineEdit" name="edit_xanes_dwell">
           <property name="maximumSize">
            <size>
@@ -1367,7 +1367,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
+        <item column="1" row="1">
          <widget class="QLineEdit" name="edit_preedge_dwell">
           <property name="maximumSize">
            <size>
@@ -1380,7 +1380,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item column="0" row="2">
          <widget class="QLabel" name="label_81">
           <property name="maximumSize">
            <size>
@@ -1399,7 +1399,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="2">
+        <item column="2" row="1">
          <widget class="QLabel" name="label_82">
           <property name="maximumSize">
            <size>
@@ -1412,7 +1412,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item column="0" row="3">
          <widget class="QLabel" name="label_97">
           <property name="maximumSize">
            <size>
@@ -1431,7 +1431,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="3">
+        <item column="3" row="1">
          <widget class="QLineEdit" name="edit_preedge_spacing">
           <property name="maximumSize">
            <size>
@@ -1444,7 +1444,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item column="0" row="4">
          <widget class="QLabel" name="label_101">
           <property name="maximumSize">
            <size>
@@ -1463,7 +1463,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
+        <item column="2" row="2">
          <widget class="QLabel" name="label_99">
           <property name="maximumSize">
            <size>
@@ -1476,7 +1476,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item column="1" row="4">
          <widget class="QComboBox" name="comboBox_exafs_dwell_kpower">
           <property name="maximumSize">
            <size>
@@ -1501,7 +1501,7 @@ Scan Manager</string>
           </item>
          </widget>
         </item>
-        <item row="1" column="4">
+        <item column="4" row="1">
          <widget class="QLabel" name="label_74">
           <property name="maximumSize">
            <size>
@@ -1514,7 +1514,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="3">
+        <item column="3" row="2">
          <widget class="QLineEdit" name="edit_xanes_spacing">
           <property name="maximumSize">
            <size>
@@ -1527,7 +1527,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="4">
+        <item column="4" row="2">
          <widget class="QLabel" name="label_76">
           <property name="maximumSize">
            <size>
@@ -1540,7 +1540,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="3">
+        <item column="3" row="3">
          <widget class="QLineEdit" name="edit_exafs_spacing">
           <property name="maximumSize">
            <size>
@@ -1553,7 +1553,7 @@ Scan Manager</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="4">
+        <item column="4" row="3">
          <widget class="QLabel" name="label_85">
           <property name="maximumSize">
            <size>
@@ -1562,11 +1562,11 @@ Scan Manager</string>
            </size>
           </property>
           <property name="text">
-           <string> k</string>
+           <string> Å⁻¹ </string>
           </property>
          </widget>
         </item>
-        <item row="0" column="3">
+        <item column="3" row="0">
          <widget class="QLabel" name="label_83">
           <property name="maximumSize">
            <size>
@@ -1653,7 +1653,7 @@ Scan Manager</string>
         <height>101</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="layout_emission_energy_selector"/>
+      <layout class="QHBoxLayout" name="layout_emission_energy_selector" />
      </widget>
      <widget class="QWidget" name="gridLayoutWidget_9">
       <property name="geometry">
@@ -1665,7 +1665,7 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_9">
-       <item row="2" column="2">
+       <item column="2" row="2">
         <widget class="QLabel" name="label_36">
          <property name="maximumSize">
           <size>
@@ -1678,7 +1678,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_122">
          <property name="maximumSize">
           <size>
@@ -1697,7 +1697,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
+       <item column="2" row="4">
         <widget class="QLabel" name="label_34">
          <property name="maximumSize">
           <size>
@@ -1710,7 +1710,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item column="2" row="3">
         <widget class="QLabel" name="label_35">
          <property name="maximumSize">
           <size>
@@ -1723,7 +1723,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item column="1" row="1">
         <widget class="QLineEdit" name="edit_preline_start">
          <property name="maximumSize">
           <size>
@@ -1736,7 +1736,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item column="1" row="3">
         <widget class="QLineEdit" name="edit_line_end">
          <property name="maximumSize">
           <size>
@@ -1749,7 +1749,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item column="1" row="2">
         <widget class="QLineEdit" name="edit_line_start">
          <property name="maximumSize">
           <size>
@@ -1762,7 +1762,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item column="1" row="4">
         <widget class="QLineEdit" name="edit_postline_end">
          <property name="maximumSize">
           <size>
@@ -1775,7 +1775,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item column="2" row="1">
         <widget class="QLabel" name="label_41">
          <property name="maximumSize">
           <size>
@@ -1788,7 +1788,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item column="0" row="1">
         <widget class="QLabel" name="label_65">
          <property name="maximumSize">
           <size>
@@ -1801,7 +1801,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item column="0" row="2">
         <widget class="QLabel" name="label_66">
          <property name="maximumSize">
           <size>
@@ -1814,7 +1814,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item column="0" row="3">
         <widget class="QLabel" name="label_67">
          <property name="maximumSize">
           <size>
@@ -1827,7 +1827,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item column="0" row="4">
         <widget class="QLabel" name="label_68">
          <property name="maximumSize">
           <size>
@@ -1857,7 +1857,7 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="1">
+       <item column="1" row="0">
         <widget class="QDoubleSpinBox" name="doubleSpinBox_spectrometer_energy">
          <property name="maximumSize">
           <size>
@@ -1876,7 +1876,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_106">
          <property name="maximumSize">
           <size>
@@ -1889,7 +1889,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item column="2" row="0">
         <widget class="QLabel" name="label_123">
          <property name="text">
           <string>eV</string>
@@ -1929,7 +1929,7 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_20">
-       <item row="1" column="0">
+       <item column="0" row="1">
         <widget class="QLabel" name="label_preline">
          <property name="maximumSize">
           <size>
@@ -1949,7 +1949,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item column="0" row="2">
         <widget class="QLabel" name="label_mainline">
          <property name="maximumSize">
           <size>
@@ -1969,7 +1969,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
+       <item column="2" row="1">
         <widget class="QLabel" name="label_preline_dwell_units">
          <property name="maximumSize">
           <size>
@@ -1982,7 +1982,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="4">
+       <item column="4" row="2">
         <widget class="QLabel" name="label_79">
          <property name="maximumSize">
           <size>
@@ -1995,7 +1995,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item column="1" row="1">
         <widget class="QLineEdit" name="edit_preline_dwell">
          <property name="maximumSize">
           <size>
@@ -2008,7 +2008,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
+       <item column="3" row="0">
         <widget class="QLabel" name="label_159">
          <property name="maximumSize">
           <size>
@@ -2027,7 +2027,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
+       <item column="4" row="1">
         <widget class="QLabel" name="label_78">
          <property name="maximumSize">
           <size>
@@ -2040,7 +2040,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_spectrometer_dwell">
          <property name="maximumSize">
           <size>
@@ -2059,7 +2059,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item column="1" row="2">
         <widget class="QLineEdit" name="edit_mainline_dwell">
          <property name="maximumSize">
           <size>
@@ -2072,7 +2072,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="3">
+       <item column="3" row="2">
         <widget class="QLineEdit" name="edit_mainline_spacing">
          <property name="maximumSize">
           <size>
@@ -2085,7 +2085,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
+       <item column="3" row="1">
         <widget class="QLineEdit" name="edit_preline_spacing">
          <property name="maximumSize">
           <size>
@@ -2098,7 +2098,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item column="2" row="2">
         <widget class="QLabel" name="label_mainline_dwell_units">
          <property name="maximumSize">
           <size>
@@ -2111,7 +2111,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item column="0" row="3">
         <widget class="QLabel" name="label_postline">
          <property name="maximumSize">
           <size>
@@ -2131,7 +2131,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item column="1" row="3">
         <widget class="QLineEdit" name="edit_postline_dwell">
          <property name="maximumSize">
           <size>
@@ -2144,7 +2144,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item column="2" row="3">
         <widget class="QLabel" name="label_postline_dwell_units">
          <property name="maximumSize">
           <size>
@@ -2157,7 +2157,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
+       <item column="3" row="3">
         <widget class="QLineEdit" name="edit_postline_spacing">
          <property name="maximumSize">
           <size>
@@ -2170,7 +2170,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="4">
+       <item column="4" row="3">
         <widget class="QLabel" name="label_107">
          <property name="maximumSize">
           <size>
@@ -2219,7 +2219,7 @@ Scan Manager</string>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_21">
-       <item row="1" column="2">
+       <item column="2" row="1">
         <widget class="QLabel" name="label_preline_dwell_units_2">
          <property name="maximumSize">
           <size>
@@ -2232,7 +2232,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
+       <item column="2" row="2">
         <widget class="QLabel" name="label_mainline_dwell_units_2">
          <property name="maximumSize">
           <size>
@@ -2245,7 +2245,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item column="0" row="0">
         <widget class="QLabel" name="label_spectrometer_dwell_2">
          <property name="maximumSize">
           <size>
@@ -2264,7 +2264,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item column="0" row="2">
         <widget class="QLabel" name="label_mainline_2">
          <property name="maximumSize">
           <size>
@@ -2284,7 +2284,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item column="1" row="2">
         <widget class="QLineEdit" name="edit_mainline_fly_duration">
          <property name="maximumSize">
           <size>
@@ -2297,7 +2297,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item column="2" row="3">
         <widget class="QLabel" name="label_postline_dwell_units_2">
          <property name="maximumSize">
           <size>
@@ -2310,7 +2310,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item column="0" row="1">
         <widget class="QLabel" name="label_preline_2">
          <property name="maximumSize">
           <size>
@@ -2330,7 +2330,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item column="1" row="1">
         <widget class="QLineEdit" name="edit_preline_fly_duration">
          <property name="maximumSize">
           <size>
@@ -2343,7 +2343,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item column="0" row="3">
         <widget class="QLabel" name="label_postline_2">
          <property name="maximumSize">
           <size>
@@ -2363,7 +2363,7 @@ Scan Manager</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item column="1" row="3">
         <widget class="QLineEdit" name="edit_postline_fly_duration">
          <property name="maximumSize">
           <size>
@@ -2409,7 +2409,7 @@ Scan Manager</string>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
-     <item row="0" column="0">
+     <item column="0" row="0">
       <widget class="QRadioButton" name="radioButton_spectrometer_none">
        <property name="maximumSize">
         <size>
@@ -2425,7 +2425,7 @@ Scan Manager</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item column="1" row="0">
       <widget class="QRadioButton" name="radioButton_spectrometer_johann">
        <property name="maximumSize">
         <size>
@@ -2438,7 +2438,7 @@ Scan Manager</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item column="2" row="0">
       <widget class="QRadioButton" name="radioButton_spectrometer_von_hamos">
        <property name="maximumSize">
         <size>
@@ -2546,7 +2546,7 @@ Scan Manager</string>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
+     <item column="1" row="0">
       <widget class="QDoubleSpinBox" name="doubleSpinBox_dwell_time">
        <property name="enabled">
         <bool>true</bool>
@@ -2568,7 +2568,7 @@ Scan Manager</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item column="1" row="1">
       <widget class="QSpinBox" name="spinBox_n_exposures">
        <property name="enabled">
         <bool>true</bool>
@@ -2587,7 +2587,7 @@ Scan Manager</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item column="0" row="1">
       <widget class="QLabel" name="label_n_exposures">
        <property name="enabled">
         <bool>true</bool>
@@ -2603,7 +2603,7 @@ Scan Manager</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item column="2" row="0">
       <widget class="QLabel" name="label_104">
        <property name="maximumSize">
         <size>
@@ -2616,7 +2616,7 @@ Scan Manager</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item column="0" row="0">
       <widget class="QLabel" name="label_dwell_time">
        <property name="enabled">
         <bool>true</bool>
@@ -2674,6 +2674,6 @@ Scan Manager</string>
    </property>
   </widget>
  </widget>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

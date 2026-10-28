@@ -15,10 +15,11 @@ from isstools.elements.liveplots import NormPlot
 import json
 # from isstools.widgets import widget_energy_selector
 from isstools.widgets import widget_energy_selector_with_periodic_table
-from isstools.elements.figure_update import update_figure, setup_figure
+from isstools.elements.figure_update import update_figure, setup_figure, set_axes_labels, motor_label, detector_channel_label, motor_egu
 # from xas.energy_calibration import validate_calibration, process_calibration
 import xraydb
 from xas.energy_calibration import find_correct_foil
+from xas.ion_chamber import gas_fractions_for_absorption, gas_absorption
 
 ui_path = str(importlib.resources.files('isstools') / 'ui/ui_beamline_setup.ui')
 
@@ -82,6 +83,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
         self.user_motor_sorted_list.sort()
 
         self.push_prepare_beamline.clicked.connect(self.prepare_beamline)
+        self.comboBox_motors.currentIndexChanged.connect(self.update_gen_scan_units)
 
         self.push_bender_scan.clicked.connect(self.bender_scan)
 
@@ -136,6 +138,11 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
         # self.widget_energy_selector_prepare = widget_energy_selector.UIEnergySelector()
         self.widget_energy_selector_prepare = widget_energy_selector_with_periodic_table.UIEnergySelectorWithPeriodicTable(emission=False)
         self.layout_energy_selector_prepare.addWidget(self.widget_energy_selector_prepare)
+        self.checkBox_set_ic_absorption.toggled.connect(self.doubleSpinBox_ic_absorption.setEnabled)
+        self.checkBox_set_ic_absorption.toggled.connect(self.update_ic_gas_mix_label)
+        self.doubleSpinBox_ic_absorption.valueChanged.connect(self.update_ic_gas_mix_label)
+        self.widget_energy_selector_prepare.edit_E0.textChanged.connect(self.update_ic_gas_mix_label)
+        self.update_ic_gas_mix_label()
         # self.widget_energy_selector_calibration = widget_energy_selector.UIEnergySelector()
         self.widget_energy_selector_calibration = widget_energy_selector_with_periodic_table.UIEnergySelectorWithPeriodicTable(emission=False)
         self.layout_energy_selector_calibration.addWidget(self.widget_energy_selector_calibration)
@@ -163,6 +170,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
             self.comboBox_motors.addItems(self.user_motor_sorted_list)
         else:
             self.comboBox_motors.addItems(self.motor_sorted_list)
+        self.update_gen_scan_units()
 
     def detector_selected(self):
         self.comboBox_channels.clear()
@@ -192,6 +200,10 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
             liveplot_list.append(_norm_plot)
             # when the liveplot is created, we also update the canvas motor:
             self._set_canvas_motor_from_name(liveplot_kwargs['curr_mot_name'])
+            x_label = motor_label(self.motor_dictionary, name=liveplot_kwargs['curr_mot_name']) or liveplot_kwargs['curr_mot_name']
+            set_axes_labels(self.figure_gen_scan.ax, xlabel=x_label,
+                            ylabel=detector_channel_label(liveplot_kwargs['channel'], liveplot_kwargs['channel_den']),
+                            title=f"General scan: {liveplot_kwargs['result_name']} vs {x_label}")
         except:
             print(f'could not make liveplot for scan {plan_name}')
         return liveplot_list
@@ -235,6 +247,11 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
 
         liveplot_det_kwargs = {'channel' : channel, 'channel_den' : channel_den, 'result_name' : result_name}
         return detectors, liveplot_det_kwargs
+
+    def update_gen_scan_units(self, *args):
+        egu = motor_egu(self.motor_dictionary, description=self.comboBox_motors.currentText())
+        self.label_gen_range_units.setText(egu)
+        self.label_gen_step_units.setText(egu)
 
     def _get_motor_for_gen_scan(self):
         curr_mot = self.comboBox_motors.currentText()
@@ -291,6 +308,22 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
             energy = None
         return energy
 
+    def update_ic_gas_mix_label(self, *args):
+        if not self.checkBox_set_ic_absorption.isChecked():
+            self.label_ic_gas_mix.setText('IC gas from energy table')
+            return
+        try:
+            energy = float(self.widget_energy_selector_prepare.edit_E0.text())
+        except ValueError:
+            self.label_ic_gas_mix.setText('')
+            return
+        absorption = self.doubleSpinBox_ic_absorption.value() / 100
+        fractions, clamped = gas_fractions_for_absorption(energy, absorption)
+        mix = ' / '.join(f'{gas} {frac * 100:.0f} %' for gas, frac in fractions.items() if frac > 0)
+        if clamped:
+            mix += f'  (max {gas_absorption(fractions, energy) * 100:.1f} % at this energy)'
+        self.label_ic_gas_mix.setText(mix)
+
     def prepare_beamline(self, energy_setting=None):
         if energy_setting:
             self.lineEdit_energy.setText(str(energy_setting))
@@ -300,6 +333,8 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
 
             plan_name = 'prepare_beamline_plan'
             plan_kwargs = {'energy' : energy, 'move_cm_mirror' : move_cm_mirror}
+            if self.checkBox_set_ic_absorption.isChecked():
+                plan_kwargs['ic_absorption'] = float(self.doubleSpinBox_ic_absorption.value())
             self.plan_processor.add_plan_and_run_if_idle(plan_name, plan_kwargs)
 
     def tune_beamline(self):
@@ -365,7 +400,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
         energy = float(self.widget_energy_selector_calibration.edit_E0.text())
         element, edge, energy = find_correct_foil(energy=energy)
         if element:
-            if element != self.widget_energy_selector_calibration.pushButton_element.text():
+            if element != self.widget_energy_selector_calibration.element:
                 ret = question_message_box(self, 'Warning', f"Element is not available as a calibration foil. {element} "
                                                              f"foil, {edge} edge will be used. Proceed?")
                 if not ret:
@@ -414,8 +449,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
     def _update_figure_with_calibration_data(self, en_ref, mu_ref, mu):
         self.figure_gen_scan.ax.plot(en_ref, mu_ref, label='Reference')
         self.figure_gen_scan.ax.plot(en_ref, mu, label='New spectrum')
-        self.figure_gen_scan.ax.set_xlabel('Energy')
-        self.figure_gen_scan.ax.set_ylabel('mu')
+        set_axes_labels(self.figure_gen_scan.ax, xlabel='Energy, eV', ylabel='Normalized \u03bc(E)', title='Energy calibration')
         self.figure_gen_scan.ax.set_xlim(en_ref[0], en_ref[-1])
         self.figure_gen_scan.legend(loc='upper left')
         self.stop_gen_scan_figure()
@@ -426,8 +460,10 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
             print('plotting - ', end='')
             self.figure_gen_scan.ax.plot(positions, values)
             self.figure_gen_scan.ax.vlines([optimum_position], values.min(), values.max(), colors='k')
-            self.figure_gen_scan.ax.set_xlabel(positions_axis_label)
-            self.figure_gen_scan.ax.set_ylabel(values_axis_label)
+            set_axes_labels(self.figure_gen_scan.ax,
+                            xlabel=motor_label(self.motor_dictionary, name=positions_axis_label) or positions_axis_label,
+                            ylabel=detector_channel_label(values_axis_label) if values_axis_label else '',
+                            title='Quick tune')
             self.figure_gen_scan.ax.set_xlim(positions.min(), positions.max())
             self.figure_gen_scan.ax.set_ylim(values.min(), values.max())
             self.stop_gen_scan_figure()

@@ -12,6 +12,13 @@ class UIUpdateMotorLimit(*uic.loadUiType(ui_path)):
         self.motor_object = motor_object
         self.lineEdit_low_limit.setText(f"{self.motor_object.low_limit:3.3f}")
         self.lineEdit_high_limit.setText(f"{self.motor_object.high_limit:3.3f}")
+        try:
+            egu = self.motor_object.egu
+        except Exception:
+            egu = ''
+        if egu:
+            self.label_high_limit.setText(f'High Limit, {egu}')
+            self.lable_low_limit.setText(f'Low Limit, {egu}')
 
         self.pushButton_ok.clicked.connect(self.update_motor_limit)
 

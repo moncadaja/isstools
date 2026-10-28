@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
@@ -28,7 +28,7 @@
      <height>781</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_pilatus_image"/>
+   <layout class="QVBoxLayout" name="verticalLayout_pilatus_image" />
   </widget>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
@@ -40,7 +40,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
+    <item column="0" row="1">
      <widget class="QLabel" name="label_3">
       <property name="maximumSize">
        <size>
@@ -53,7 +53,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item column="1" row="0">
      <widget class="QDoubleSpinBox" name="doubleSpinBox_exposure">
       <property name="maximumSize">
        <size>
@@ -69,7 +69,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QLabel" name="label">
       <property name="maximumSize">
        <size>
@@ -82,7 +82,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QLabel" name="label_exposure">
       <property name="maximumSize">
        <size>
@@ -95,7 +95,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item column="2" row="1">
      <widget class="QLabel" name="label_num_of_images">
       <property name="maximumSize">
        <size>
@@ -108,7 +108,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item column="1" row="1">
      <widget class="QDoubleSpinBox" name="doubleSpinBox_num_of_images">
       <property name="maximumSize">
        <size>
@@ -201,7 +201,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QCheckBox" name="checkBox_enable_energy_change">
       <property name="maximumSize">
        <size>
@@ -210,11 +210,11 @@
        </size>
       </property>
       <property name="text">
-       <string/>
+       <string />
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QSpinBox" name="spinBox_mono_energy">
       <property name="enabled">
        <bool>false</bool>
@@ -231,9 +231,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> eV</string></property></widget>
     </item>
-    <item row="0" column="3">
+    <item column="3" row="0">
      <widget class="QLabel" name="label_current_energy">
       <property name="minimumSize">
        <size>
@@ -252,14 +252,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item column="4" row="0">
      <widget class="QPushButton" name="pushButton_move_energy">
       <property name="text">
        <string>Start</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item column="1" row="0">
      <widget class="QLabel" name="label_4">
       <property name="maximumSize">
        <size>
@@ -284,7 +284,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="6">
+    <item column="6" row="0">
      <widget class="QLabel" name="label_12">
       <property name="minimumSize">
        <size>
@@ -303,7 +303,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="2">
+    <item column="2" row="4">
      <widget class="QSpinBox" name="spinBox_roi4_min_x">
       <property name="maximumSize">
        <size>
@@ -317,9 +317,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="1" column="6">
+    <item column="6" row="1">
      <widget class="QLabel" name="label_counts_roi1">
       <property name="minimumSize">
        <size>
@@ -338,14 +338,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
+    <item column="3" row="0">
      <widget class="QLabel" name="label_9">
       <property name="text">
        <string>Y</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item column="2" row="1">
      <widget class="QSpinBox" name="spinBox_roi1_min_x">
       <property name="maximumSize">
        <size>
@@ -359,9 +359,9 @@
       <property name="value">
        <number>20</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="2" column="4">
+    <item column="4" row="2">
      <widget class="QSpinBox" name="spinBox_roi2_width">
       <property name="maximumSize">
        <size>
@@ -375,9 +375,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="4" column="4">
+    <item column="4" row="4">
      <widget class="QSpinBox" name="spinBox_roi4_width">
       <property name="maximumSize">
        <size>
@@ -391,9 +391,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="3" column="6">
+    <item column="6" row="3">
      <widget class="QLabel" name="label_counts_roi3">
       <property name="minimumSize">
        <size>
@@ -412,7 +412,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item column="0" row="1">
      <widget class="QCheckBox" name="checkBox_roi1">
       <property name="maximumSize">
        <size>
@@ -428,7 +428,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item column="0" row="3">
      <widget class="QCheckBox" name="checkBox_roi3">
       <property name="maximumSize">
        <size>
@@ -441,7 +441,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="5">
+    <item column="5" row="4">
      <widget class="QSpinBox" name="spinBox_roi4_height">
       <property name="maximumSize">
        <size>
@@ -455,9 +455,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="2" column="5">
+    <item column="5" row="2">
      <widget class="QSpinBox" name="spinBox_roi2_height">
       <property name="maximumSize">
        <size>
@@ -471,9 +471,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="1" column="5">
+    <item column="5" row="1">
      <widget class="QSpinBox" name="spinBox_roi1_height">
       <property name="maximumSize">
        <size>
@@ -487,9 +487,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="2" column="0">
+    <item column="0" row="2">
      <widget class="QCheckBox" name="checkBox_roi2">
       <property name="maximumSize">
        <size>
@@ -502,7 +502,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item column="0" row="4">
      <widget class="QCheckBox" name="checkBox_roi4">
       <property name="maximumSize">
        <size>
@@ -515,7 +515,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="3">
+    <item column="3" row="2">
      <widget class="QSpinBox" name="spinBox_roi2_min_y">
       <property name="maximumSize">
        <size>
@@ -529,16 +529,16 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="0" column="5">
+    <item column="5" row="0">
      <widget class="QLabel" name="label_11">
       <property name="text">
        <string>Height</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="6">
+    <item column="6" row="2">
      <widget class="QLabel" name="label_counts_roi2">
       <property name="minimumSize">
        <size>
@@ -557,7 +557,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
+    <item column="3" row="1">
      <widget class="QSpinBox" name="spinBox_roi1_min_y">
       <property name="maximumSize">
        <size>
@@ -571,9 +571,9 @@
       <property name="value">
        <number>500</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="2" column="2">
+    <item column="2" row="2">
      <widget class="QSpinBox" name="spinBox_roi2_min_x">
       <property name="maximumSize">
        <size>
@@ -587,9 +587,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="3" column="5">
+    <item column="5" row="3">
      <widget class="QSpinBox" name="spinBox_roi3_height">
       <property name="maximumSize">
        <size>
@@ -603,9 +603,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="3" column="2">
+    <item column="2" row="3">
      <widget class="QSpinBox" name="spinBox_roi3_min_x">
       <property name="maximumSize">
        <size>
@@ -619,9 +619,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="4" column="3">
+    <item column="3" row="4">
      <widget class="QSpinBox" name="spinBox_roi4_min_y">
       <property name="maximumSize">
        <size>
@@ -635,9 +635,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="4" column="6">
+    <item column="6" row="4">
      <widget class="QLabel" name="label_counts_roi4">
       <property name="minimumSize">
        <size>
@@ -656,7 +656,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="3">
+    <item column="3" row="3">
      <widget class="QSpinBox" name="spinBox_roi3_min_y">
       <property name="maximumSize">
        <size>
@@ -670,16 +670,16 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QLabel" name="label_8">
       <property name="text">
        <string>X</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
+    <item column="4" row="1">
      <widget class="QSpinBox" name="spinBox_roi1_width">
       <property name="maximumSize">
        <size>
@@ -693,9 +693,9 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QLabel" name="label_5">
       <property name="maximumSize">
        <size>
@@ -708,7 +708,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="4">
+    <item column="4" row="3">
      <widget class="QSpinBox" name="spinBox_roi3_width">
       <property name="maximumSize">
        <size>
@@ -722,16 +722,16 @@
       <property name="value">
        <number>9000</number>
       </property>
-     </widget>
+     <property name="suffix"><string> px</string></property></widget>
     </item>
-    <item row="0" column="4">
+    <item column="4" row="0">
      <widget class="QLabel" name="label_10">
       <property name="text">
        <string>Width</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item column="1" row="1">
      <widget class="QPushButton" name="pushButton_edit_roi1">
       <property name="maximumSize">
        <size>
@@ -747,7 +747,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item column="1" row="2">
      <widget class="QPushButton" name="pushButton_edit_roi2">
       <property name="maximumSize">
        <size>
@@ -763,7 +763,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item column="1" row="3">
      <widget class="QPushButton" name="pushButton_edit_roi3">
       <property name="maximumSize">
        <size>
@@ -779,7 +779,7 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item column="1" row="4">
      <widget class="QPushButton" name="pushButton_edit_roi4">
       <property name="maximumSize">
        <size>
@@ -819,7 +819,7 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="2" column="0">
+     <item column="0" row="2">
       <widget class="QLabel" name="label_7">
        <property name="maximumSize">
         <size>
@@ -832,7 +832,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item column="0" row="0">
       <widget class="QLabel" name="label_2">
        <property name="maximumSize">
         <size>
@@ -845,7 +845,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item column="0" row="1">
       <widget class="QLabel" name="label_6">
        <property name="maximumSize">
         <size>
@@ -858,7 +858,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item column="1" row="2">
       <widget class="QComboBox" name="comboBox_shapetime">
        <property name="maximumSize">
         <size>
@@ -868,7 +868,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item column="2" row="0">
       <widget class="QLabel" name="label_set_energy">
        <property name="maximumSize">
         <size>
@@ -881,7 +881,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item column="2" row="1">
       <widget class="QLabel" name="label_cutoff_energy">
        <property name="maximumSize">
         <size>
@@ -894,7 +894,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item column="1" row="0">
       <widget class="QDoubleSpinBox" name="doubleSpinBox_set_energy">
        <property name="enabled">
         <bool>false</bool>
@@ -907,7 +907,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item column="1" row="1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox_cutoff_energy">
        <property name="enabled">
         <bool>false</bool>
@@ -959,14 +959,14 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5">
-    <item row="1" column="0">
+    <item column="0" row="1">
      <widget class="QLabel" name="label_14">
       <property name="text">
-       <string>Max</string>
+       <string>Max, counts</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item column="1" row="1">
      <widget class="QLineEdit" name="lineEdit_max">
       <property name="maximumSize">
        <size>
@@ -976,7 +976,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item column="1" row="0">
      <widget class="QLineEdit" name="lineEdit_min">
       <property name="maximumSize">
        <size>
@@ -986,14 +986,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item column="0" row="0">
      <widget class="QLabel" name="label_13">
       <property name="text">
-       <string>Min</string>
+       <string>Min, counts</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item column="2" row="1">
      <widget class="QLabel" name="label_max">
       <property name="maximumSize">
        <size>
@@ -1002,11 +1002,11 @@
        </size>
       </property>
       <property name="text">
-       <string/>
+       <string />
       </property>
      </widget>
     </item>
-    <item row="0" column="2">
+    <item column="2" row="0">
      <widget class="QLabel" name="label_min">
       <property name="maximumSize">
        <size>
@@ -1015,7 +1015,7 @@
        </size>
       </property>
       <property name="text">
-       <string/>
+       <string />
       </property>
      </widget>
     </item>
@@ -1054,7 +1054,7 @@
        </size>
       </property>
       <property name="text">
-       <string/>
+       <string />
       </property>
      </widget>
     </item>
@@ -1089,13 +1089,13 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string />
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

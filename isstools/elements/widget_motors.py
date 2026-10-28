@@ -62,7 +62,7 @@ class UIWidgetMotors(*uic.loadUiType(ui_path)):
 
         self.label_mov_status = QLabel("      ")
         self.label_mov_status.setFixedWidth(int(23))
-        self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60)')
+        self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60); color: white')
         self.layout_motor_widget.addWidget(self.label_mov_status)
 
         self.lineEdit_setpoint = QLineEdit("")
@@ -76,7 +76,7 @@ class UIWidgetMotors(*uic.loadUiType(ui_path)):
 
         self.label_low_limit = QLabel("      ")
         self.label_low_limit.setFixedWidth(int(23))
-        self.label_low_limit.setStyleSheet('background-color: rgb(94,20,20)')
+        self.label_low_limit.setStyleSheet('background-color: rgb(94,20,20); color: white')
         self._motor_object.low_limit_switch.subscribe(self.update_motor_llim_status)
         self.layout_motor_widget.addWidget(self.label_low_limit)
 
@@ -88,7 +88,7 @@ class UIWidgetMotors(*uic.loadUiType(ui_path)):
         self.layout_motor_widget.addWidget(self.label_motor_readback)
 
         self.label_high_limit = QLabel("      ")
-        self.label_high_limit.setStyleSheet('background-color: rgb(94,20,20)')
+        self.label_high_limit.setStyleSheet('background-color: rgb(94,20,20); color: white')
         self.label_high_limit.setFixedWidth(int(23))
         self._motor_object.high_limit_switch.subscribe(self.update_motor_hlim_status)
         self.layout_motor_widget.addWidget(self.label_high_limit)
@@ -128,9 +128,9 @@ class UIWidgetMotors(*uic.loadUiType(ui_path)):
     @try_to_update_gui_decorator
     def update_moving_label(self, value, **kwargs):
         if value == 1:
-            self.label_mov_status.setStyleSheet('background-color: rgb(95,249,95)')
+            self.label_mov_status.setStyleSheet('background-color: rgb(95,249,95); color: black')
         else:
-            self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60)')
+            self.label_mov_status.setStyleSheet('background-color: rgb(55,130,60); color: white')
 
     def update_set_point(self):
         _read_desired_setpoint = self.lineEdit_setpoint.text()
@@ -150,16 +150,16 @@ class UIWidgetMotors(*uic.loadUiType(ui_path)):
     @try_to_update_gui_decorator
     def update_motor_hlim_status(self, value, **kwargs):
         if value == 1:
-            self.label_high_limit.setStyleSheet('background-color: rgb(255,0,0)')
+            self.label_high_limit.setStyleSheet('background-color: rgb(255,0,0); color: white')
         else:
-            self.label_high_limit.setStyleSheet('background-color: rgb(94,20,20)')
+            self.label_high_limit.setStyleSheet('background-color: rgb(94,20,20); color: white')
 
     @try_to_update_gui_decorator
     def update_motor_llim_status(self, value, **kwargs):
         if value == 1:
-            self.label_low_limit.setStyleSheet('background-color: rgb(255,0,0)')
+            self.label_low_limit.setStyleSheet('background-color: rgb(255,0,0); color: white')
         else:
-            self.label_low_limit.setStyleSheet('background-color: rgb(94,20,20)')
+            self.label_low_limit.setStyleSheet('background-color: rgb(94,20,20); color: white')
 
     def update_decrement(self):
         self._motor_object.twr.put(1)
